@@ -2,4 +2,5 @@ rootProject.name = 'microservices'
 include 'registry'
 include 'config'
 include 'gateway'
+include 'auth-service'
 
