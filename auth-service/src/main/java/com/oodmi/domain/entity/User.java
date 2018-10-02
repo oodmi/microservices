@@ -20,7 +20,6 @@ public class User implements UserDetails {
 
     private String password;
 
-
     @Override
     public String getPassword() {
         return password;
