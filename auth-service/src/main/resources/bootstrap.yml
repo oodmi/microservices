@@ -11,3 +11,9 @@ spring:
     enabled: true
     locations: classpath:/db
     check-location: false
+
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob.non_contextual_creation: true

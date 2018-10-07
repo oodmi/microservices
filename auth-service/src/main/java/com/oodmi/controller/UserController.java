@@ -27,4 +27,9 @@ public class UserController {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userService.create(user);
     }
+
+    @RequestMapping("/")
+    public String hello() {
+        return "hello world";
+    }
 }
