@@ -1,7 +1,6 @@
 package com.oodmi.security;
 
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,10 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.auth0.jwt.algorithms.Algorithm.*;
-import static com.oodmi.security.SecurityConstants.HEADER_STRING;
-import static com.oodmi.security.SecurityConstants.SECRET;
-import static com.oodmi.security.SecurityConstants.TOKEN_PREFIX;
+import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
+import static com.oodmi.security.SecurityConstants.*;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 

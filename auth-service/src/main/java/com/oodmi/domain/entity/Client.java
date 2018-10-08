@@ -32,7 +32,8 @@ public class Client {
     private String login;
 
     @Column(name = "time_key")
-    private LocalDateTime time;
+    @Builder.Default
+    private LocalDateTime time = LocalDateTime.now();
 
     @Column(name = "client_name")
     private String name;

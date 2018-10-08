@@ -3,6 +3,7 @@ package com.oodmi.domain;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class JwtUser implements UserDetails {
@@ -10,6 +11,10 @@ public class JwtUser implements UserDetails {
     private final Collection<? extends GrantedAuthority> authorities;
     private String username;
     private String password;
+
+    public JwtUser() {
+        authorities = new ArrayList<>();
+    }
 
     public JwtUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         this.username = username;

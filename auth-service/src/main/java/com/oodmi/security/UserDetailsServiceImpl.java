@@ -1,8 +1,8 @@
 package com.oodmi.security;
 
 import com.oodmi.domain.JwtUser;
-import com.oodmi.domain.entity.User;
-import com.oodmi.repository.UserRepository;
+import com.oodmi.domain.entity.Client;
+import com.oodmi.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,12 +15,12 @@ import static java.util.Collections.emptyList;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private ClientRepository repository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
+        Client client = repository.findByLogin(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
-        return new JwtUser(user.getUsername(), user.getPassword(), emptyList());
+        return new JwtUser(client.getLogin(), client.getPassword(), emptyList());
     }
 }

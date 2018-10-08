@@ -1,7 +1,7 @@
 package com.oodmi.controller;
 
-import com.oodmi.domain.entity.User;
-import com.oodmi.service.UserService;
+import com.oodmi.domain.entity.Client;
+import com.oodmi.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,19 +13,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
 
-    private UserService userService;
+    private ClientService clientService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserController(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userService = userService;
+    public UserController(ClientService clientService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.clientService = clientService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @PostMapping("/sign-up")
-    public void signUp(@RequestBody User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userService.create(user);
+    public void signUp(@RequestBody Client client) {
+//        client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
+        clientService.create(client);
     }
 
     @RequestMapping("/")
