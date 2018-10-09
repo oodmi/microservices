@@ -4,7 +4,14 @@ spring:
     url: jdbc:postgresql://localhost:5432/mircoservices
     username: postgres
     password: postgres
-
+  flyway:
+    enabled: true
+    locations: classpath:/db
+    check-location: false
+  jpa:
+    properties:
+      hibernate:
+        temp.use_jdbc_metadata_defaults: false
 server:
   servlet:
     context-path: /uaa

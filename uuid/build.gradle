@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+}
+
+repositories {
+    maven {
+        url 'https://repo.spring.io/libs-milestone'
+    }
+    maven {
+        url 'https://repo.spring.io/libs-snapshot'
+    }
+}
+
+group 'com.oodmi'
+version '1.0'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-oauth2'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-config'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
+    compile group: 'com.auth0', name: 'java-jwt', version: '3.4.0'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Finchley.SR1"
+    }
+}

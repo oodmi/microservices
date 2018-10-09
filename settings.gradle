@@ -3,4 +3,5 @@ include 'registry'
 include 'config'
 include 'gateway'
 include 'auth-service'
+include 'uuid'
 
