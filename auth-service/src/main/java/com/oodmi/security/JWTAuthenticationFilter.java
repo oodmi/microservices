@@ -7,16 +7,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
@@ -40,7 +38,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                     new UsernamePasswordAuthenticationToken(
                             credentials.getUsername(),
                             credentials.getPassword(),
-                            new ArrayList<>())
+                            credentials.getAuthorities())
             );
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -53,8 +51,16 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             FilterChain chain,
                                             Authentication auth) {
 
+        Object[] objects = ((UserDetails) auth.getPrincipal()).getAuthorities()
+                .stream().map((GrantedAuthority it) -> it.getAuthority().toString()).toArray();
+        String[] s = new String[objects.length];
+        for (int i = 0; i < objects.length; i++) {
+            Object object = objects[i];
+            s[i] = (String) object;
+        }
         String token = JWT.create()
                 .withSubject(((UserDetails) auth.getPrincipal()).getUsername())
+                .withArrayClaim("roles", s)
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(HMAC512(SECRET.getBytes()));
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
