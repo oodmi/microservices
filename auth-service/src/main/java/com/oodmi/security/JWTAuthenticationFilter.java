@@ -51,6 +51,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             FilterChain chain,
                                             Authentication auth) {
 
+        addHeader(res, auth);
+    }
+
+    public static void addHeader(HttpServletResponse res, Authentication auth) {
         Object[] objects = ((UserDetails) auth.getPrincipal()).getAuthorities()
                 .stream().map((GrantedAuthority it) -> it.getAuthority().toString()).toArray();
         String[] s = new String[objects.length];

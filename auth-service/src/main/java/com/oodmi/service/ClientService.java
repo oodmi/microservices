@@ -3,9 +3,8 @@ package com.oodmi.service;
 import com.oodmi.domain.entity.Client;
 import com.oodmi.repository.ClientRepository;
 import com.oodmi.repository.RoleRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,18 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
+@Slf4j
+@AllArgsConstructor
 public class ClientService {
 
-    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-    private final Logger log = LoggerFactory.getLogger(getClass());
+    private final BCryptPasswordEncoder encoder;
     private final ClientRepository repository;
     private final RoleRepository roleRepository;
-
-    @Autowired
-    public ClientService(ClientRepository repository, RoleRepository roleRepository) {
-        this.repository = repository;
-        this.roleRepository = roleRepository;
-    }
 
     @Transactional
     public void create(Client user) {
@@ -41,5 +35,10 @@ public class ClientService {
         repository.save(user);
 
         log.info("new user has been created: {}", user.getLogin());
+    }
+
+    @Transactional
+    public Optional<Client> findByEmail(String email) {
+        return repository.findByEmail(email);
     }
 }
