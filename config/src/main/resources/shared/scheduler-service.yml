@@ -1,0 +1,4 @@
+server:
+  servlet:
+    context-path: /scheduler
+  port: 9000

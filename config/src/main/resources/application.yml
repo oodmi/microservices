@@ -9,6 +9,8 @@ spring:
   security:
     user:
       password: ${CONFIG_SERVICE_PASSWORD}
+  application:
+    name: config
 
 server:
   port: 8888

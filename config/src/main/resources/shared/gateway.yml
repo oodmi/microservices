@@ -19,7 +19,7 @@ zuul:
   routes:
     auth-service:
         path: /uaa/**
-        url: http://localhost:5000
+        serviceId: auth-service
         stripPrefix: false
         sensitiveHeaders:
 
@@ -44,6 +44,12 @@ zuul:
     uuid:
         path: /uuid/**
         serviceId: uuid
+        stripPrefix: false
+        sensitiveHeaders:
+
+    scheduler-service:
+        path: /scheduler/**
+        serviceId: scheduler-service
         stripPrefix: false
         sensitiveHeaders:
 
