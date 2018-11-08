@@ -7,6 +7,7 @@
     <link href="/assets/materialize/css/materialize.min.css" rel="stylesheet">
     <script type="text/javascript" src="/assets/jquery/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="/assets/materialize/js/materialize.min.js"></script>
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
 </head>
 <body>
 <nav class="navbar navbar-default">

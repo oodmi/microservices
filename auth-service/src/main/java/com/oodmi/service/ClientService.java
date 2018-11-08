@@ -21,20 +21,26 @@ public class ClientService {
     private final RoleRepository roleRepository;
 
     @Transactional
-    public void create(Client user) {
+    public void create(Client client) {
 
-        Optional<Client> existing = repository.findByLogin(user.getLogin());
+        Optional<Client> existing = repository.findByLogin(client.getLogin());
         existing.ifPresent(it -> {
-            throw new IllegalArgumentException("user already exists: " + it.getLogin());
+            throw new IllegalArgumentException("client already exists: " + it.getLogin());
         });
 
-        String hash = encoder.encode(user.getPassword());
-        user.setPassword(hash);
-        user.setRole(roleRepository.findByName("USER").orElseThrow(() -> new IllegalArgumentException("role was nor found")));
+        String hash = encoder.encode(client.getPassword());
+        client.setPassword(hash);
+        client.setRole(roleRepository.findByName("USER").orElseThrow(() -> new IllegalArgumentException("role was nor found")));
 
-        repository.save(user);
+        repository.save(client);
 
-        log.info("new user has been created: {}", user.getLogin());
+        log.info("new client has been created: {}", client.getLogin());
+    }
+
+    @Transactional
+    public void update(Client client) {
+        repository.save(client);
+        log.info("client has been updated: {}", client.getLogin());
     }
 
     @Transactional

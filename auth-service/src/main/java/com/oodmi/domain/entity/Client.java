@@ -49,4 +49,8 @@ public class Client {
 
     @Column(name = "client_birthday")
     private LocalDate birthday;
+
+    @OneToOne
+    @JoinColumn(name = "vk_id")
+    private Vk vk;
 }

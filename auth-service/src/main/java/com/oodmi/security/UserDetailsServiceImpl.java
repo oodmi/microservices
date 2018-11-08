@@ -23,6 +23,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Client client = repository.findByLogin(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
         return new JwtUser(client.getLogin(), client.getPassword(),
-                Collections.singletonList(new SimpleGrantedAuthority(client.getRole().getName())));
+                Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + client.getRole().getName().toUpperCase())));
     }
 }
