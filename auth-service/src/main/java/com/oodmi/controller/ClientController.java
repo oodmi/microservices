@@ -90,8 +90,6 @@ public class ClientController {
         client.setVk(token);
         clientService.update(client);
 
-        clientService.update(client);
-
         UserDetails credentials = new JwtUser(client.getLogin(), "password_vk",
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + client.getRole().getName().toUpperCase())));
 

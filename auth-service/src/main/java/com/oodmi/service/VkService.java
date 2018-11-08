@@ -23,7 +23,9 @@ public class VkService {
         if (existing.isPresent()) {
             Vk ex = existing.get();
             ex.setToken(vk.getToken());
-            repository.save(vk);
+            repository.save(ex);
+            vk.setId(ex.getId());
+            repository.flush();
             log.info("vk has been updated: {}", vk.getUserId());
         } else {
             repository.save(vk);
