@@ -23,12 +23,19 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.QueryParam;
 import java.security.Principal;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Optional;
 
 @RestController
@@ -55,7 +62,8 @@ public class ClientController {
     }
 
     @GetMapping(value = "/login/vk")
-    public String vk(@QueryParam("code") String code, HttpServletResponse res) throws ClientException, ApiException {
+    public RedirectView vk(@QueryParam("code") String code, HttpServletRequest req,
+                           HttpServletResponse res) throws ClientException, ApiException {
         TransportClient transportClient = HttpTransportClient.getInstance();
         VkApiClient vk = new VkApiClient(transportClient);
         UserAuthResponse authResponse = vk.oauth()
@@ -90,7 +98,9 @@ public class ClientController {
         client.setVk(token);
         clientService.update(client);
 
-        UserDetails credentials = new JwtUser(client.getLogin(), "password_vk",
+        UserDetails credentials = new JwtUser(
+                client.getLogin(),
+                "password_vk",
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + client.getRole().getName().toUpperCase())));
 
         Authentication authenticate = authenticationManager.authenticate(
@@ -101,8 +111,11 @@ public class ClientController {
 
         JWTAuthenticationFilter.addHeader(res, authenticate);
 
+        final String[] split = req.getRequestURL().toString().split(":");
+        String url = split[0] + ":" + split[1] + ":" + 4000 + "/";
 
-        return authResponse.getAccessToken();
+        final RedirectView redirectView = new RedirectView(url, false);
+        return redirectView;
     }
 
 }
