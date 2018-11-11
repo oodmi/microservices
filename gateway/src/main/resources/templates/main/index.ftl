@@ -12,7 +12,7 @@
         location = "https://oauth.vk.com/authorize" +
                 "?client_id=6725739" +
                 "&display=page" +
-                "&redirect_uri=" + name + "/uaa/user/login/vk" +
+                "&redirect_uri=" + name +
                 "&scope=friends,email,offline" +
                 "&response_type=code" +
                 "&v=5.87"
