@@ -32,8 +32,8 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
-
-    compile group: 'com.oodmi', name: "auth-service", version: '1.0'
+    
+    compileOnly project(':auth-service')
 }
 
 
