@@ -9,3 +9,16 @@ spring:
       discovery:
         service-id: config
         enabled: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/mircoservices
+    username: postgres
+    password: postgres
+  flyway:
+    enabled: true
+    locations: classpath:/db
+    check-location: false
+  jpa:
+    properties:
+      hibernate:
+        temp.use_jdbc_metadata_defaults: false
