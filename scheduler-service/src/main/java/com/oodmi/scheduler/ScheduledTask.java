@@ -2,7 +2,9 @@ package com.oodmi.scheduler;
 
 import com.oodmi.client.UuidClient;
 import com.oodmi.domain.entity.Client;
+import com.oodmi.domain.entity.VkFriend;
 import com.oodmi.repository.ClientRepository;
+import com.oodmi.repository.VkFriendRepository;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.UserActor;
 import com.vk.api.sdk.exceptions.ApiException;
@@ -12,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,19 +31,18 @@ public class ScheduledTask {
 
     private final ClientRepository clientRepository;
 
+    private final VkFriendRepository vkFriendRepository;
+
     @Scheduled(fixedRate = 10000)
     public void task() {
         List<Client> all = clientRepository.findAll();
         all.forEach(this::method);
-
-        String randomUuid = uuidClient.getRandomUuid();
-        log.info(randomUuid);
-        log.info("hi!");
     }
 
+    @Transactional
     public void method(Client client) {
         try {
-            if(client.getVk() == null){
+            if (client.getVk() == null) {
                 log.info("VK is null");
                 return;
             }
@@ -48,10 +50,18 @@ public class ScheduledTask {
                                              .execute();
             Integer count = execute.getCount();
             String collect = execute.getItems().stream().map(Object::toString).collect(Collectors.joining(","));
-                log.info("count: {}, friends: {}", count, collect);
-        } catch (ApiException e) {
-            e.printStackTrace();
-        } catch (ClientException e) {
+            String randomUuid = uuidClient.getRandomUuid();
+
+            VkFriend vkFriend = VkFriend.builder()
+                                        .vk(client.getVk())
+                                        .content(collect)
+                                        .count(count.longValue())
+                                        .uuid(randomUuid)
+                                        .build();
+            vkFriendRepository.save(vkFriend);
+
+            log.info("friends: {}", vkFriend);
+        } catch (ApiException | ClientException e) {
             e.printStackTrace();
         }
 

@@ -35,6 +35,8 @@ dependencies {
     compile group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
 //    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.0'
     compile 'com.vk.api:sdk:0.5.12'
+
+    compile project(':api')
 }
 
 dependencyManagement {

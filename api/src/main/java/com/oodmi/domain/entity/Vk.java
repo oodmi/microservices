@@ -1,12 +1,10 @@
 package com.oodmi.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Builder
@@ -15,6 +13,7 @@ import javax.persistence.*;
 @Accessors(chain = true)
 @Entity
 @Table(name = "vk")
+@ToString(exclude = "friends")
 public class Vk {
 
     @Id
@@ -31,4 +30,7 @@ public class Vk {
     @Column(name = "vk_valid")
     @Builder.Default
     private Boolean valid = Boolean.TRUE;
+
+    @OneToMany(mappedBy = "vk", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<VkFriend> friends;
 }

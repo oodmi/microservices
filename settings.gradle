@@ -5,4 +5,5 @@ include 'gateway'
 include 'auth-service'
 include 'uuid'
 include 'scheduler-service'
+include 'api'
 
