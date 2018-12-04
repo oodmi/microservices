@@ -19,6 +19,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,6 +33,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ClientController implements ClientResource {
 
+    private final BCryptPasswordEncoder encoder;
     private ClientService clientService;
     private AuthenticationManager authenticationManager;
     private VkService vkService;
@@ -40,6 +42,8 @@ public class ClientController implements ClientResource {
 
     @Override
     public ResponseEntity signUp(@RequestBody Client client) {
+        String hash = encoder.encode(client.getPassword());
+        client.setPassword(hash);
         clientService.create(client);
         return ResponseEntity.ok(client);
     }
@@ -70,7 +74,7 @@ public class ClientController implements ClientResource {
             client = new Client()
                     .setEmail(email)
                     .setLogin(userId.toString())
-                    .setPassword("password_vk");
+                    .setPassword(encoder.encode("password_vk"));
             clientService.create(client);
         } else {
             client = opt.get();

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: scheduler
+    name: scheduler-service
   cloud:
     config:
       fail-fast: true
@@ -14,10 +14,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/mircoservices
     username: postgres
     password: postgres
-  flyway:
-    enabled: true
-    locations: classpath:/db
-    check-location: false
   jpa:
     properties:
       hibernate:

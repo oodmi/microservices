@@ -3,7 +3,6 @@ package com.oodmi.service;
 import com.oodmi.client.UuidClient;
 import com.oodmi.domain.entity.Client;
 import com.oodmi.domain.entity.VkFriend;
-import com.oodmi.repository.ClientRepository;
 import com.oodmi.repository.VkFriendRepository;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.UserActor;
@@ -15,7 +14,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,16 +29,15 @@ public class VkFriendService {
 
     private final UuidClient uuidClient;
     private final VkApiClient vkApiClient;
-    private final ClientRepository clientRepository;
     private final VkFriendRepository vkFriendRepository;
 
 
     @Transactional
-    public void method(Client client) {
+    public String method(Client client) {
         try {
             if (client.getVk() == null) {
                 log.info("VK is null");
-                return;
+                return "";
             }
             GetResponse execute = vkApiClient.friends().get(new UserActor(Integer.valueOf(client.getVk().getUserId()), client.getVk().getToken()))
                                              .execute();
@@ -51,17 +54,12 @@ public class VkFriendService {
             vkFriendRepository.save(vkFriend);
 
             log.info("friends: {}", vkFriend);
+            return randomUuid;
         } catch (ApiException | ClientException e) {
             e.printStackTrace();
+            return "";
         }
-
     }
-
-    @Transactional
-    public List<Client> findAll() {
-        return clientRepository.findAll();
-    }
-
 
     @Transactional
     public Map<Type, List<String>> getDifference(String firstUUID, String secondUUID) {
@@ -89,8 +87,8 @@ public class VkFriendService {
         String[] firstArray = first.split(",");
         String[] firstArrayCopy = Arrays.copyOf(firstArray, firstArray.length);
 
-        List<String> firstList = Arrays.asList(firstArray); // a b c
-        List<String> secondList = Arrays.asList(second.split(",")); // b c d
+        List<String> firstList = new ArrayList<>(Arrays.asList(firstArray)); // a b c
+        List<String> secondList = new ArrayList<>(Arrays.asList(second.split(",")));// b c d
 
         firstList.removeAll(secondList); // a
 

@@ -5,10 +5,10 @@ import com.oodmi.repository.ClientRepository;
 import com.oodmi.repository.RoleRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,7 +16,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ClientService {
 
-    private final BCryptPasswordEncoder encoder;
     private final ClientRepository repository;
     private final RoleRepository roleRepository;
 
@@ -28,8 +27,6 @@ public class ClientService {
             throw new IllegalArgumentException("client already exists: " + it.getLogin());
         });
 
-        String hash = encoder.encode(client.getPassword());
-        client.setPassword(hash);
         client.setRole(roleRepository.findByName("USER").orElseThrow(() -> new IllegalArgumentException("role was nor found")));
 
         repository.save(client);
@@ -47,4 +44,16 @@ public class ClientService {
     public Optional<Client> findByEmail(String email) {
         return repository.findByEmail(email);
     }
+
+    @Transactional
+    public Client findByLogin(String login) {
+        Optional<Client> client = repository.findByLogin(login);
+        return client.orElseThrow(() -> new IllegalArgumentException("client already exists: " + login));
+    }
+
+    @Transactional
+    public List<Client> findAll() {
+        return repository.findAll();
+    }
+
 }
