@@ -6,4 +6,5 @@ include 'auth-service'
 include 'uuid'
 include 'scheduler-service'
 include 'api'
+include 'information-service'
 
