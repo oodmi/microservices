@@ -1,4 +1,4 @@
-package com.oodmi.registry.security;
+package com.oodmi.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -39,6 +39,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/uaa/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/uaa/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/").permitAll()
+                .antMatchers(HttpMethod.GET, "/favicon.ico").permitAll()
+                .antMatchers(HttpMethod.GET, "/assets/**").permitAll()
                 .antMatchers("/actuator/**").permitAll()
                 .anyRequest().authenticated()
                 .and()

@@ -3,6 +3,7 @@ package com.oodmi.service;
 import com.oodmi.client.UuidClient;
 import com.oodmi.domain.entity.Client;
 import com.oodmi.domain.entity.VkFriend;
+import com.oodmi.domain.type.FriendEnum;
 import com.oodmi.repository.VkFriendRepository;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.UserActor;
@@ -62,7 +63,7 @@ public class VkFriendService {
     }
 
     @Transactional
-    public Map<Type, List<String>> getDifference(String firstUUID, String secondUUID) {
+    public Map<FriendEnum, List<String>> getDifference(String firstUUID, String secondUUID) {
         Optional<VkFriend> first = vkFriendRepository.findByUuid(firstUUID);
         Optional<VkFriend> second = vkFriendRepository.findByUuid(secondUUID);
 
@@ -80,9 +81,9 @@ public class VkFriendService {
     }
 
 
-    private Map<Type, List<String>> difference(String first, String second) {
+    private Map<FriendEnum, List<String>> difference(String first, String second) {
 
-        Map<Type, List<String>> result = new HashMap<>(2);
+        Map<FriendEnum, List<String>> result = new HashMap<>(2);
 
         String[] firstArray = first.split(",");
         String[] firstArrayCopy = Arrays.copyOf(firstArray, firstArray.length);
@@ -94,14 +95,9 @@ public class VkFriendService {
 
         secondList.removeAll(Arrays.asList(firstArrayCopy)); //d
 
-        result.put(Type.REMOVED, firstList);
-        result.put(Type.NEW, secondList);
+        result.put(FriendEnum.REMOVED, firstList);
+        result.put(FriendEnum.NEW, secondList);
 
         return result;
-    }
-
-    public enum Type {
-        REMOVED,
-        NEW
     }
 }

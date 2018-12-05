@@ -28,8 +28,6 @@ dependencies {
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-config'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
 
-    compile 'com.vk.api:sdk:0.5.12'
-
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
     compile group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
 

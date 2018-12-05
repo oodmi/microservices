@@ -1,4 +1,4 @@
-package com.oodmi.registry.security;
+package com.oodmi.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.Claim;
@@ -18,7 +18,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
-import static com.oodmi.registry.security.SecurityConstants.*;
+import static com.oodmi.security.SecurityConstants.*;
 
 
 public class JWTAuthorizationFilter extends OncePerRequestFilter {

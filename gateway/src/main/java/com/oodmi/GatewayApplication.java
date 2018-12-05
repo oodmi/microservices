@@ -1,4 +1,4 @@
-package com.oodmi.registry;
+package com.oodmi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

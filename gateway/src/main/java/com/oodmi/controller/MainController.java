@@ -1,8 +1,8 @@
-package com.oodmi.registry.controller;
+package com.oodmi.controller;
 
 import static com.oodmi.security.SecurityConstants.HEADER_STRING;
 
-import com.oodmi.registry.client.AuthClient;
+import com.oodmi.client.AuthClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

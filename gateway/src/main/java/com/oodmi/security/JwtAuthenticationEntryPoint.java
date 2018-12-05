@@ -1,4 +1,4 @@
-package com.oodmi.registry.security;
+package com.oodmi.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

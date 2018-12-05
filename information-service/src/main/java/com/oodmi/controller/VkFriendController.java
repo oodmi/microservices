@@ -1,6 +1,7 @@
 package com.oodmi.controller;
 
 import com.oodmi.domain.entity.Client;
+import com.oodmi.domain.type.FriendEnum;
 import com.oodmi.service.ClientService;
 import com.oodmi.service.VkFriendService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class VkFriendController {
 
     @GetMapping("difference/")
     public ResponseEntity getDifference(@RequestParam("first") String first, @RequestParam("second") String second) {
-        Map<VkFriendService.Type, List<String>> difference = vkFriendService.getDifference(first, second);
+        Map<FriendEnum, List<String>> difference = vkFriendService.getDifference(first, second);
         return ResponseEntity.ok(difference);
     }
 

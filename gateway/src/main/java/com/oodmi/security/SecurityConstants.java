@@ -1,4 +1,4 @@
-package com.oodmi.registry.security;
+package com.oodmi.security;
 
 public class SecurityConstants {
     public static final String SECRET = "LolkaLolka1211'";
