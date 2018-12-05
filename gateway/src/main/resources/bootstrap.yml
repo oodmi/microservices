@@ -11,3 +11,12 @@ spring:
         enabled: true
   freemaker:
     suffix=.ftl
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/mircoservices
+    username: postgres
+    password: postgres
+  jpa:
+    properties:
+      hibernate:
+        temp.use_jdbc_metadata_defaults: false

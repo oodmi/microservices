@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @FeignClient("information-service")
-@RequestMapping("/information")
 public interface InformationClient {
 
     @GetMapping(value = "update/{login}", consumes = "application/json")

@@ -1,4 +1,2 @@
 server:
-  servlet:
-    context-path: /uuid
   port: 8000

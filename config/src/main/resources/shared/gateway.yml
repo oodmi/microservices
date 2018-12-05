@@ -23,41 +23,21 @@ zuul:
       stripPrefix: false
       sensitiveHeaders:
 
-    account-service:
-      path: /accounts/**
-      serviceId: account-service
-      stripPrefix: false
-      sensitiveHeaders:
-
-    statistics-service:
-      path: /statistics/**
-      serviceId: statistics-service
-      stripPrefix: false
-      sensitiveHeaders:
-
     notification-service:
       path: /notifications/**
       serviceId: notification-service
-      stripPrefix: false
-      sensitiveHeaders:
 
     uuid:
       path: /uuid/**
       serviceId: uuid
-      stripPrefix: false
-      sensitiveHeaders:
 
     scheduler-service:
       path: /scheduler/**
       serviceId: scheduler-service
-      stripPrefix: false
-      sensitiveHeaders:
 
     information-service:
       path: /information/**
       serviceId: information-service
-      stripPrefix: false
-      sensitiveHeaders:
 
 server:
   port: 4000

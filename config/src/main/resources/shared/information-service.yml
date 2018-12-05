@@ -1,4 +1,2 @@
 server:
-  servlet:
-    context-path: /information
   port: 10000
