@@ -1,9 +1,12 @@
 package com.oodmi.service;
 
 import com.oodmi.client.UuidClient;
+import com.oodmi.domain.dto.VkFriendDto;
 import com.oodmi.domain.entity.Client;
+import com.oodmi.domain.entity.Vk;
 import com.oodmi.domain.entity.VkFriend;
 import com.oodmi.domain.type.FriendEnum;
+import com.oodmi.mapper.VkFriendMapper;
 import com.oodmi.repository.VkFriendRepository;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.UserActor;
@@ -15,12 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,6 +29,7 @@ public class VkFriendService {
     private final UuidClient uuidClient;
     private final VkApiClient vkApiClient;
     private final VkFriendRepository vkFriendRepository;
+    private final VkFriendMapper friendMapper;
 
 
     @Transactional
@@ -99,5 +98,10 @@ public class VkFriendService {
         result.put(FriendEnum.NEW, secondList);
 
         return result;
+    }
+
+    public List<VkFriendDto> getByLogin(Vk vk) {
+        List<VkFriend> vkFriendsByVk = vkFriendRepository.findVkFriendsByVk(vk);
+        return vkFriendsByVk.stream().map(friendMapper::vkFriendToVkFriendDto).collect(Collectors.toList());
     }
 }

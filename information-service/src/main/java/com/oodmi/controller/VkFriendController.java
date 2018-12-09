@@ -1,23 +1,21 @@
 package com.oodmi.controller;
 
+import com.oodmi.domain.dto.VkFriendDto;
 import com.oodmi.domain.entity.Client;
 import com.oodmi.domain.type.FriendEnum;
 import com.oodmi.service.ClientService;
 import com.oodmi.service.VkFriendService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/")
+@RequestMapping("/friend/")
 public class VkFriendController {
 
     private final VkFriendService vkFriendService;
@@ -34,5 +32,12 @@ public class VkFriendController {
         final Client client = clientService.findByLogin(login);
         final String answer = vkFriendService.method(client);
         return ResponseEntity.ok().body(answer);
+    }
+
+    @GetMapping(value = "/{login}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<List<VkFriendDto>> getByLogin(@PathVariable String login) {
+        final Client client = clientService.findByLogin(login);
+        List<VkFriendDto> byLogin = vkFriendService.getByLogin(client.getVk());
+        return ResponseEntity.ok().body(byLogin);
     }
 }
