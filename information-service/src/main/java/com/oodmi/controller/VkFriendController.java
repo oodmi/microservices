@@ -21,13 +21,13 @@ public class VkFriendController {
     private final VkFriendService vkFriendService;
     private final ClientService clientService;
 
-    @GetMapping("difference/")
+    @GetMapping(value = "difference", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity getDifference(@RequestParam("first") String first, @RequestParam("second") String second) {
         Map<FriendEnum, List<String>> difference = vkFriendService.getDifference(first, second);
         return ResponseEntity.ok(difference);
     }
 
-    @GetMapping("update/{login}")
+    @GetMapping(value = "update/{login}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity update(@PathVariable String login) {
         final Client client = clientService.findByLogin(login);
         final String answer = vkFriendService.method(client);

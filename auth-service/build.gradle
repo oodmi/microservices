@@ -28,6 +28,7 @@ dependencies {
     compile group: 'org.flywaydb', name: 'flyway-core', version: '5.1.4'
     compile group: 'com.auth0', name: 'java-jwt', version: '3.4.0'
     compile 'com.vk.api:sdk:0.5.12'
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
 
     compile project(':api')
 }

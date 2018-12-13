@@ -48,7 +48,7 @@ public class ClientService {
     @Transactional
     public Client findByLogin(String login) {
         Optional<Client> client = repository.findByLogin(login);
-        return client.orElseThrow(() -> new IllegalArgumentException("client already exists: " + login));
+        return client.orElseThrow(() -> new IllegalArgumentException("client doesn't exist: " + login));
     }
 
     @Transactional
