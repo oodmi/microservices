@@ -20,10 +20,13 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-config'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
+
     compile project(':api')
 }
 
