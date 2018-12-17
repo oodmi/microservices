@@ -13,6 +13,8 @@ import com.vk.api.sdk.client.actors.UserActor;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.objects.friends.responses.GetResponse;
+import com.vk.api.sdk.objects.users.UserXtrCounters;
+import com.vk.api.sdk.queries.users.UserField;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -59,6 +61,22 @@ public class VkFriendService {
             e.printStackTrace();
             return "";
         }
+    }
+
+    public void getUserInfo(Client client, String... ids) throws ClientException, ApiException {
+        List<UserXtrCounters> execute = vkApiClient.users()
+                                                   .get(new UserActor(Integer.valueOf(client.getVk().getUserId()),
+                                                           client.getVk().getToken()))
+                                                   .fields(UserField.PHOTO_100, UserField.DOMAIN)
+                                                   .userIds(ids)
+                                                   .execute();
+        execute.forEach(item -> {
+            Integer id = item.getId();
+            String photo100 = item.getPhoto100();
+            String firstName = item.getFirstName();
+            String lastName = item.getLastName();
+            String domain = item.getDomain();
+        });
     }
 
     @Transactional
