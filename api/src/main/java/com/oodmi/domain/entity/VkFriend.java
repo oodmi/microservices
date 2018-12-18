@@ -6,7 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Data
@@ -19,25 +22,25 @@ import java.time.LocalDateTime;
 public class VkFriend {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "vk_friend_id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "vk_id")
-    private Vk vk;
+    @Column(name = "vk_friend_name")
+    private String name;
 
-    @Column(name = "vk_friend_count")
-    private Long count;
+    @Column(name = "vk_friend_surname")
+    private String surname;
 
-    @Column(name = "vk_friend_content")
-    private String content;
+    @Column(name = "vk_friend_email")
+    private String email;
 
-    @Column(name = "vk_friend_uuid")
-    private String uuid;
+    @Column(name = "vk_friend_domain")
+    private String domain;
+
+    @Column(name = "vk_friend_photo")
+    private String photo;
 
     @Column(name = "time_key")
     @Builder.Default
     private LocalDateTime time = LocalDateTime.now();
-
 }

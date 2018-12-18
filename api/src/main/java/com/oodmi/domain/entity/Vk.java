@@ -13,7 +13,7 @@ import java.util.Set;
 @Accessors(chain = true)
 @Entity
 @Table(name = "vk")
-@ToString(exclude = "friends")
+@ToString(exclude = "friendsHistory")
 public class Vk {
 
     @Id
@@ -32,5 +32,5 @@ public class Vk {
     private Boolean valid = Boolean.TRUE;
 
     @OneToMany(mappedBy = "vk", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<VkFriend> friends;
+    private Set<VkFriendHistory> friendsHistory;
 }

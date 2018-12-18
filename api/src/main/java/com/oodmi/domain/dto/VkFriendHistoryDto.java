@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class VkFriendDto {
+public class VkFriendHistoryDto {
 
     private Long count;
 

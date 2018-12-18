@@ -1,9 +1,9 @@
 package com.oodmi.mapper;
 
-import com.oodmi.domain.dto.VkFriendDto;
-import com.oodmi.domain.entity.VkFriend;
+import com.oodmi.domain.dto.VkFriendHistoryDto;
+import com.oodmi.domain.entity.VkFriendHistory;
 
 public interface VkFriendMapper {
 
-    VkFriendDto vkFriendToVkFriendDto(VkFriend friend);
+    VkFriendHistoryDto vkFriendToVkFriendDto(VkFriendHistory friend);
 }

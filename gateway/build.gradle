@@ -6,7 +6,7 @@ plugins {
 apply plugin: 'java'
 
 bootJar {
-baseName = 'gateway'
+    baseName = 'gateway'
     version = '1.0'
     group = 'com.oodmi'
 }
@@ -18,14 +18,16 @@ repositories { mavenCentral() }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-freemarker'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-server'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-config'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-zuul'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-freemarker'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
     compile group: 'com.auth0', name: 'java-jwt', version: '3.4.0'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
-    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
     compile group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
 
     compileOnly project(':api')
 }
