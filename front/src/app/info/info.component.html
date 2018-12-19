@@ -1,2 +1,16 @@
-<h1>INFO
-</h1>
+<h1>INFO</h1>
+<table mdbTable>
+    <thead>
+      <tr>
+        <th *ngFor="let head of headers" scope="col">{{head}} </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr mdbTableCol *ngFor="let req of requests">
+        <th scope="row">{{req.date}}</th>
+        <td>{{req.uuid}}</td> 
+        <td>{{req.amount}}</td>
+        <td><a [routerLink]='["uuid",req.uuid]'>Показать</a></td>
+      </tr>
+    </tbody>
+  </table>

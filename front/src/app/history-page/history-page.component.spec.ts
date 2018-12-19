@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RequestsDatePageComponent } from './requests-date-page.component';
+import { HistoryPageComponent } from './history-page.component';
 
-describe('RequestsDatePageComponent', () => {
-  let component: RequestsDatePageComponent;
-  let fixture: ComponentFixture<RequestsDatePageComponent>;
+describe('HistoryPageComponent', () => {
+  let component: HistoryPageComponent;
+  let fixture: ComponentFixture<HistoryPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RequestsDatePageComponent ]
+      declarations: [ HistoryPageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RequestsDatePageComponent);
+    fixture = TestBed.createComponent(HistoryPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

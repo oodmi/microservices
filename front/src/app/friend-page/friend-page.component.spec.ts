@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RequestsTableComponent } from './requests-table.component';
+import { FriendPageComponent } from './friend-page.component';
 
-describe('RequestsTableComponent', () => {
-  let component: RequestsTableComponent;
-  let fixture: ComponentFixture<RequestsTableComponent>;
+describe('FriendPageComponent', () => {
+  let component: FriendPageComponent;
+  let fixture: ComponentFixture<FriendPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RequestsTableComponent ]
+      declarations: [ FriendPageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RequestsTableComponent);
+    fixture = TestBed.createComponent(FriendPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

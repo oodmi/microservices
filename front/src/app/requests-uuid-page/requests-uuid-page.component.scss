@@ -1,0 +1,18 @@
+.filters-wrapper {
+    width:20%;
+    float:left;
+}
+
+.tables-wrapper {
+    width:80%;
+    float:left;
+    .table-new{
+        float:left;
+        width:50%;
+    }
+
+    .table-removed{
+        float:left;
+        width:50%;
+    }
+}

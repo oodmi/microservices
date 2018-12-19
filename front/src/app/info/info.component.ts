@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from '../core/data.service';
 
 @Component({
   selector: 'app-info',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InfoComponent implements OnInit {
 
-  constructor() { }
+  requests = [];
+  headers = ['Время', 'Идентификатор', 'Количество', ''];
+  constructor(
+    private dataService: DataService
+  ) { }
 
   ngOnInit() {
+    this.requests = this.dataService.getRequests();
   }
 
 }
