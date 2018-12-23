@@ -14,7 +14,7 @@
                 "?client_id=6725739" +
                 "&display=page" +
                 "&redirect_uri=" + name +
-                "&scope=friendsHistory,email,offline" +
+                "&scope=friends,history,email,offline" +
                 "&response_type=code" +
                 "&v=5.87"
     });

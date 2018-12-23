@@ -1,2 +1,0 @@
-ALTER TABLE vk_friend
-  ADD COLUMN vk_friend_count BIGINT NOT NULL DEFAULT 0;
