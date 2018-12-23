@@ -38,7 +38,7 @@ public class VkFriendController {
         return ResponseEntity.ok(difference);
     }
 
-    @GetMapping(value = "update/{login}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "update/{login}")
     public ResponseEntity update(@PathVariable String login) {
         final Client client = clientService.findByLogin(login);
         final String answer = vkFriendHistoryService.method(client);
