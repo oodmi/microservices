@@ -17,7 +17,7 @@ public class ScheduledTask {
     private final InformationClient client;
     private final ClientService clientService;
 
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 3600 * 1000)
     public void task() {
         List<Client> all = clientService.findAll();
 
