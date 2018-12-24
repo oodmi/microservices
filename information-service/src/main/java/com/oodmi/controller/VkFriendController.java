@@ -1,5 +1,6 @@
 package com.oodmi.controller;
 
+import com.oodmi.client.AuthClient;
 import com.oodmi.domain.dto.VkFriendHistoryDto;
 import com.oodmi.domain.entity.Client;
 import com.oodmi.domain.entity.VkFriend;
@@ -14,7 +15,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,13 +28,23 @@ public class VkFriendController {
 
     private final VkFriendHistoryService vkFriendHistoryService;
     private final ClientService clientService;
+    private final AuthClient authClient;
+    private final HttpServletRequest req;
 
     @GetMapping(value = "difference/uuid/{login}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity getDifference(@PathVariable String login,
                                         @RequestParam("first") String first,
-                                        @RequestParam("second") String second
-    ) throws ClientException, ApiException {
+                                        @RequestParam("second") String second) throws ClientException, ApiException {
         final Client client = clientService.findByLogin(login);
+        Map<FriendEnum, List<VkFriend>> difference = vkFriendHistoryService.getDifference(client, first, second);
+        return ResponseEntity.ok(difference);
+    }
+
+    @GetMapping(value = "difference/uuid", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity getDifference(@RequestParam("first") String first,
+                                        @RequestParam("second") String second) throws ClientException, ApiException {
+        HashMap<String, Object> user = authClient.getUser(req.getHeader("Authorization"));
+        final Client client = clientService.findByLogin((String) user.get("name"));
         Map<FriendEnum, List<VkFriend>> difference = vkFriendHistoryService.getDifference(client, first, second);
         return ResponseEntity.ok(difference);
     }
@@ -49,6 +62,19 @@ public class VkFriendController {
         return ResponseEntity.ok(difference);
     }
 
+    @GetMapping(value = "difference/time", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity getDifferenceByTime(@RequestParam("from")
+                                              @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
+                                                      LocalDateTime from,
+                                              @RequestParam("to")
+                                              @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
+                                                      LocalDateTime to) throws ClientException, ApiException {
+        HashMap<String, Object> user = authClient.getUser(req.getHeader("Authorization"));
+        final Client client = clientService.findByLogin((String) user.get("name"));
+        Map<FriendEnum, List<VkFriend>> difference = vkFriendHistoryService.getDifferenceByTime(client, from, to);
+        return ResponseEntity.ok(difference);
+    }
+
     @GetMapping(value = "update/{login}")
     public ResponseEntity update(@PathVariable String login) {
         final Client client = clientService.findByLogin(login);
@@ -56,9 +82,25 @@ public class VkFriendController {
         return ResponseEntity.ok().body(answer);
     }
 
+    @GetMapping(value = "update")
+    public ResponseEntity update() {
+        HashMap<String, Object> user = authClient.getUser(req.getHeader("Authorization"));
+        final Client client = clientService.findByLogin((String) user.get("name"));
+        final String answer = vkFriendHistoryService.method(client);
+        return ResponseEntity.ok().body(answer);
+    }
+
     @GetMapping(value = "/{login}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<VkFriendHistoryDto>> getByLogin(@PathVariable String login) {
         final Client client = clientService.findByLogin(login);
+        List<VkFriendHistoryDto> byLogin = vkFriendHistoryService.getByLogin(client.getVk());
+        return ResponseEntity.ok().body(byLogin);
+    }
+
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<List<VkFriendHistoryDto>> getByLogin() {
+        HashMap<String, Object> user = authClient.getUser(req.getHeader("Authorization"));
+        final Client client = clientService.findByLogin((String) user.get("name"));
         List<VkFriendHistoryDto> byLogin = vkFriendHistoryService.getByLogin(client.getVk());
         return ResponseEntity.ok().body(byLogin);
     }

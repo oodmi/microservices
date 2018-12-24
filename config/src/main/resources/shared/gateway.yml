@@ -22,22 +22,16 @@ zuul:
       serviceId: auth-service
       stripPrefix: false
       sensitiveHeaders:
-
-    notification-service:
-      path: /notifications/**
-      serviceId: notification-service
-
     uuid:
       path: /uuid/**
       serviceId: uuid
-
     scheduler-service:
       path: /scheduler/**
       serviceId: scheduler-service
-
     information-service:
       path: /information/**
       serviceId: information-service
+      sensitiveHeaders:
 
 server:
   port: 4000
