@@ -9,14 +9,12 @@ import com.oodmi.service.VkFriendHistoryService;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -28,13 +26,26 @@ public class VkFriendController {
     private final VkFriendHistoryService vkFriendHistoryService;
     private final ClientService clientService;
 
-    @GetMapping(value = "difference/{login}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "difference/uuid/{login}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity getDifference(@PathVariable String login,
                                         @RequestParam("first") String first,
                                         @RequestParam("second") String second
     ) throws ClientException, ApiException {
         final Client client = clientService.findByLogin(login);
         Map<FriendEnum, List<VkFriend>> difference = vkFriendHistoryService.getDifference(client, first, second);
+        return ResponseEntity.ok(difference);
+    }
+
+    @GetMapping(value = "difference/time/{login}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity getDifferenceByTime(@PathVariable String login,
+                                              @RequestParam("from")
+                                              @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
+                                                      LocalDateTime from,
+                                              @RequestParam("to")
+                                              @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
+                                                      LocalDateTime to) throws ClientException, ApiException {
+        final Client client = clientService.findByLogin(login);
+        Map<FriendEnum, List<VkFriend>> difference = vkFriendHistoryService.getDifferenceByTime(client, from, to);
         return ResponseEntity.ok(difference);
     }
 

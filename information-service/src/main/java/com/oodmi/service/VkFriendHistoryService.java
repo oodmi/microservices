@@ -22,12 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -75,7 +70,7 @@ public class VkFriendHistoryService {
     public List<VkFriend> getFriendsInfo(Client client, List<String> ids) throws ClientException, ApiException {
         List<UserXtrCounters> execute = vkApiClient.users()
                                                    .get(new UserActor(Integer.valueOf(client.getVk().getUserId()),
-                                                                      client.getVk().getToken()))
+                                                           client.getVk().getToken()))
                                                    .fields(UserField.PHOTO_100, UserField.DOMAIN)
                                                    .userIds(ids)
                                                    .execute();
@@ -118,6 +113,24 @@ public class VkFriendHistoryService {
         String secondContent = second.map(VkFriendHistory::getContent).orElseThrow(() -> {
             log.error("UUID : {} doesn't exist", secondUUID);
             return new RuntimeException("UUID : " + secondUUID + " doesn't exist");
+        });
+
+        return difference(client, firstContent, secondContent);
+    }
+
+    @Transactional
+    public Map<FriendEnum, List<VkFriend>> getDifferenceByTime(Client client, LocalDateTime fromTime, LocalDateTime toTime) throws ClientException, ApiException {
+        Optional<VkFriendHistory> from = vkFriendHistoryRepository.findTopByTimeAfterOrderByTimeAsc(fromTime);
+        Optional<VkFriendHistory> to = vkFriendHistoryRepository.findTopByTimeBeforeOrderByTimeDesc(toTime);
+
+        String firstContent = from.map(VkFriendHistory::getContent).orElseThrow(() -> {
+            log.error("History after time : {} doesn't exist", fromTime);
+            return new RuntimeException("History after time : " + fromTime + " doesn't exist");
+        });
+
+        String secondContent = to.map(VkFriendHistory::getContent).orElseThrow(() -> {
+            log.error("History before time : {} doesn't exist", toTime);
+            return new RuntimeException("History before time : " + toTime + " doesn't exist");
         });
 
         return difference(client, firstContent, secondContent);
