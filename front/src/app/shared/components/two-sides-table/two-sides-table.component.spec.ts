@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FriendPageComponent } from './friend-page.component';
+import { TwoSidesTableComponent } from './two-sides-table.component';
 
-describe('FriendPageComponent', () => {
-  let component: FriendPageComponent;
-  let fixture: ComponentFixture<FriendPageComponent>;
+describe('TwoSidesTableComponent', () => {
+  let component: TwoSidesTableComponent;
+  let fixture: ComponentFixture<TwoSidesTableComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FriendPageComponent ]
+      declarations: [ TwoSidesTableComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FriendPageComponent);
+    fixture = TestBed.createComponent(TwoSidesTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

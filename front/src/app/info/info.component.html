@@ -6,11 +6,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr mdbTableCol *ngFor="let req of requests">
+      <tr mdbTableCol *ngFor="let req of requests; let i = index">
         <th scope="row">{{req.date}}</th>
         <td>{{req.uuid}}</td> 
         <td>{{req.amount}}</td>
         <td><a [routerLink]='["uuid",req.uuid]'>Показать</a></td>
+        <td><mat-checkbox [disabled]="selectedRequests.length === 2 && selectedRequests.indexOf(req.uuid) === -1" (change)="selectRequest(req.uuid)"></mat-checkbox></td>
       </tr>
     </tbody>
+
+    <button mat-raised-button [disabled]="selectedRequests.length < 2" (click)="openDifferenceUUID()">Посмотреть разницу</button>
   </table>

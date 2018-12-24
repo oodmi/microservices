@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../core/data.service';
 import { Friend } from '../shared/model/friend';
+import { DifferenceStateService } from '../core/difference-state.service';
 
 @Component({
   selector: 'app-requests-uuid-page',
@@ -10,8 +10,11 @@ import { Friend } from '../shared/model/friend';
 })
 export class RequestsUuidPageComponent implements OnInit {
 
-  newFriends: Array<Friend> = [];
-  removedFriends: Array<Friend> = [];
+  uuid1 = '';
+  uuid2 = '';
+
+  newFriends: Array<Friend>;
+  removedFriends: Array<Friend>;
 
   filters = {
     dateFrom: null,
@@ -19,49 +22,22 @@ export class RequestsUuidPageComponent implements OnInit {
   };
 
   constructor(
-    private route: ActivatedRoute,
-    private dataService: DataService
+    private dataService: DataService,
+    private differenceState: DifferenceStateService
   ) { }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      const requests = this.dataService.getByUUID(params.uuid);
-      this.newFriends = requests.NEW;
-      this.removedFriends = requests.REMOVED;
-    });
+    if (this.differenceState.uuid1 && this.differenceState.uuid1) {
+      this.uuid1 = this.differenceState.uuid1;
+      this.uuid2 = this.differenceState.uuid2;
+      this.getDifference();
+      this.differenceState.clearUUIDS();
+    }
   }
 
-  dateFromChange(event: any) {
-    this.filters.dateFrom = new Date(event.value);
-  }
-
-  dateToChange(event: any) {
-    this.filters.dateTo = new Date(event.value);
-  }
-
-  viewNewFriends() {
-    let view = this.newFriends;
-    if (this.filters.dateFrom) {
-      view = view.filter(req => new Date(req.time) >= this.filters.dateFrom);
-    }
-
-    if (this.filters.dateTo) {
-      view = view.filter(req => new Date(req.time) <= this.filters.dateTo);
-    }
-
-    return view;
-  }
-
-  viewRemovedFriends() {
-    let view = this.removedFriends;
-    if (this.filters.dateFrom) {
-      view = view.filter(req => new Date(req.time) >= this.filters.dateFrom);
-    }
-
-    if (this.filters.dateTo) {
-      view = view.filter(req => new Date(req.time) <= this.filters.dateTo);
-    }
-
-    return view;
+  getDifference() {
+    const requests = this.dataService.getDifferenceByUUID(this.uuid1, this.uuid2);
+    this.newFriends = requests.NEW;
+    this.removedFriends = requests.REMOVED;
   }
 }

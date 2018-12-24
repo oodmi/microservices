@@ -1,0 +1,28 @@
+<div class='tables-wrapper'>
+  <div class='table-new'>
+      <h1>Добавленные</h1>
+      <table mdbTable>
+          <tbody>
+              <tr mdbTableCol *ngFor="let item of leftData">
+                  <th scope="row">{{item.photo}}</th>
+                  <td>{{item.name}}</td>
+                  <td>{{item.surname}}</td>
+                  <td>{{item.time}}</td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+  <div class='table-removed'>
+      <h1>Удаленные</h1>
+      <table mdbTable>
+          <tbody>
+              <tr mdbTableCol *ngFor="let item of rightData">
+                  <th scope="row">{{item.photo}}</th>
+                  <td>{{item.name}}</td>
+                  <td>{{item.surname}}</td>
+                  <td>{{item.time}}</td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationStart, Event } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -7,15 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  currentPage: string = 'home';
+  currentPage = '/';
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
-  }
-
-  setPage(state){
-    this.currentPage = state;
+    if (window.location.pathname !== this.currentPage) {
+      this.currentPage = window.location.pathname;
+    }
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationStart) {
+          this.currentPage = event.url;
+      }
+  });
   }
 
 }

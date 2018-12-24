@@ -7,22 +7,19 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item" [ngClass]="{'active':currentPage === 'home'}" (click)="setPage('home')" >
-          <a class="nav-link" routerLink="">Home <span class="sr-only">(current)</span></a>
+        <li class="nav-item" [ngClass]="{'active':currentPage === '/'}" >
+          <a class="nav-link" routerLink="">История <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item" [ngClass]="{'active':currentPage === 'history'}" (click)="setPage('history')">
-          <a class="nav-link" routerLink="history">History</a>
+        <li class="nav-item" [ngClass]="{'active':currentPage === '/difference/uuid'}">
+          <a class="nav-link" routerLink="difference/uuid">Сравнение по UUID <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item" [ngClass]="{'active':currentPage === '/difference/date'}">
+          <a class="nav-link" routerLink="difference/date">Сравнение по Дате <span class="sr-only">(current)</span></a>
         </li>
       </ul>
       <ul class="navbar-nav nav-flex-icons">
         <li class="nav-item">
-          <a class="nav-link"><i class="fa fa-facebook"></i></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link"><i class="fa fa-twitter"></i></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link"><i class="fa fa-instagram"></i></a>
+          <a class="nav-link"><i class="fa fa-sign-out"></i></a>
         </li>
       </ul>
     </div>

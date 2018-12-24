@@ -1,8 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatDatepickerModule, MatFormFieldModule, MatNativeDateModule, MatInputModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  MatDatepickerModule,
+  MatFormFieldModule,
+  MatNativeDateModule,
+  MatInputModule,
+  MatButtonModule,
+  MatCheckboxModule
+} from '@angular/material';
 
 import { DataService } from './core/data.service';
 
@@ -12,8 +19,10 @@ import { AppComponent } from './app.component';
 import { InfoComponent } from './info/info.component';
 import { RequestsUuidPageComponent } from './requests-uuid-page/requests-uuid-page.component';
 import { HeaderComponent } from './header/header.component';
-import { HistoryPageComponent } from './history-page/history-page.component';
-import { FriendPageComponent } from './friend-page/friend-page.component';
+import { RequestsDatePageComponent } from './requests-date-page/requests-date-page.component';
+import { UuidPageComponent } from './uuid-page/uuid-page.component';
+import { NewRemovedTableComponent } from './shared/components/new-removed-table/new-removed-table.component';
+import { TwoSidesTableComponent } from './shared/components/two-sides-table/two-sides-table.component';
 
 @NgModule({
   declarations: [
@@ -21,8 +30,10 @@ import { FriendPageComponent } from './friend-page/friend-page.component';
     InfoComponent,
     RequestsUuidPageComponent,
     HeaderComponent,
-    HistoryPageComponent,
-    FriendPageComponent
+    RequestsDatePageComponent,
+    UuidPageComponent,
+    NewRemovedTableComponent,
+    TwoSidesTableComponent
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -33,7 +44,9 @@ import { FriendPageComponent } from './friend-page/friend-page.component';
     MatDatepickerModule,
     MatFormFieldModule,
     MatNativeDateModule,
-    FormsModule
+    FormsModule,
+    MatButtonModule,
+    MatCheckboxModule
   ],
   exports: [
     MatDatepickerModule,

@@ -1,49 +1,12 @@
 <h1>Requests uuid page</h1>
+<div>
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Введите UUID №1" [(ngModel)]='uuid1'>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Введите UUID №2" [(ngModel)]='uuid2'>
+      </mat-form-field>
 
-<div class='filters-wrapper'>
-    <h1>Фильтры</h1>
-    <div>
-        <mat-form-field>
-            <input matInput [matDatepicker]="pickerFrom" (dateChange)="dateFromChange($event)" placeholder="Начальная дата">
-            <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-            <mat-datepicker #pickerFrom></mat-datepicker>
-        </mat-form-field>
-    </div>
-    <div>
-        <mat-form-field>
-            <input matInput [matDatepicker]="pickerTo" (dateChange)="dateToChange($event)" placeholder="Конечная дата">
-            <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
-            <mat-datepicker #pickerTo></mat-datepicker>
-        </mat-form-field>
-    </div>
+      <button mat-raised-button (click)="getDifference()">Показать разницу</button>
 </div>
-
-
-<div class='tables-wrapper'>
-    <div class='table-new'>
-        <h1>Добавленные</h1>
-        <table mdbTable>
-            <tbody>
-                <tr mdbTableCol *ngFor="let req of viewNewFriends()">
-                    <th scope="row">{{req.photo}}</th>
-                    <td>{{req.name}}</td>
-                    <td>{{req.surname}}</td>
-                    <td>{{req.time}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class='table-removed'>
-        <h1>Удаленные</h1>
-        <table mdbTable>
-            <tbody>
-                <tr mdbTableCol *ngFor="let req of viewRemovedFriends()">
-                    <th scope="row">{{req.photo}}</th>
-                    <td>{{req.name}}</td>
-                    <td>{{req.surname}}</td>
-                    <td>{{req.time}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+<app-two-sides-table *ngIf="newFriends && removedFriends" [leftData]="newFriends" [rightData]="removedFriends"></app-two-sides-table>

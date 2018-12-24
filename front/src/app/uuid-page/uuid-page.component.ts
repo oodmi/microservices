@@ -1,28 +1,32 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../core/data.service';
 import { Friend } from '../shared/model/friend';
 
 @Component({
-  selector: 'app-history-page',
-  templateUrl: './history-page.component.html',
-  styleUrls: ['./history-page.component.scss']
+  selector: 'app-uuid-page',
+  templateUrl: './uuid-page.component.html',
+  styleUrls: ['./uuid-page.component.scss']
 })
-export class HistoryPageComponent implements OnInit {
+export class UuidPageComponent implements OnInit {
+
 
   friends: Array<Friend> = [];
   headers = ['id', 'Photo', 'Name', 'Surname', 'Email', 'Time'];
   filters = {
-    uuid: '',
     dateFrom: null,
     dateTo: null
   };
 
   constructor(
-    private dataService: DataService
+    private dataService: DataService,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    this.friends = this.dataService.getFullData();
+    this.route.params.subscribe(params => {
+      this.friends = this.dataService.getByUUID(params.uuid);
+    });
   }
 
   dateFromChange(event: any) {
@@ -35,9 +39,6 @@ export class HistoryPageComponent implements OnInit {
 
   viewFriends() {
     let view = this.friends;
-    if (this.filters.uuid) {
-      view = this.friends.filter(friend => friend.uuid && friend.uuid.indexOf(this.filters.uuid) !== 0);
-    }
     if (this.filters.dateFrom) {
       view = view.filter(friend => new Date(friend.time) >= this.filters.dateFrom);
     }
