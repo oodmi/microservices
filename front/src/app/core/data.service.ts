@@ -19,17 +19,22 @@ export class DataService {
 
    setToken() {
      if (!this.httpOptions) {
-      const token = localStorage.getItem('token');
+      let token = localStorage.getItem('token');
       if (!token) {
-        window.location.href = 'http://microservices.eastus.cloudapp.azure.com:4000';
-      } else {
-        this.httpOptions = {
-          headers: new HttpHeaders({
-            'Content-Type':  'application/json',
-            'Authorization': 'my-auth-token'
-          })
-        };
+        localStorage.setItem('token', document.cookie.replace(/(?:(?:^|.*;s*)token*=s*([^;]*).*$)|^.*$/, '$1') );
+        token = localStorage.getItem('token');
+        console.log(token);
       }
+      // if (!token) {
+      //   window.location.href = 'http://microservices.eastus.cloudapp.azure.com:4000';
+      // } else {
+      //   this.httpOptions = {
+      //     headers: new HttpHeaders({
+      //       'Content-Type':  'application/json',
+      //       'Authorization': 'my-auth-token'
+      //     })
+      //   };
+      // }
      }
 
    }
