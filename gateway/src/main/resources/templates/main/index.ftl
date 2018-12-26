@@ -22,7 +22,9 @@
         var el = $("#token");
         console.log(el.text());
         localStorage.setItem("token", el.text());
-        document.cookie = 'token='+el.text()+'; token_expires=Fri, 3 Aug 2020 20:47:11 UTC; path=/'
+        document.cookie = 'token='+el.text()+'; token_expires=Fri, 3 Aug 2020 20:47:11 UTC; path=/';
+        console.log(document.cookie.replace(/(?:(?:^|.*;s*)token*=s*([^;]*).*$)|^.*$/, '$1') );
+        console.log(document.cookie.replace(/(?:(?:^|.*;s*)token*=s*([^;]*).*$)|^.*$/, '$1') );
         el.text('');
     });
 
