@@ -48,7 +48,7 @@ public class VkFriendHistoryService {
                                              .execute();
             Integer count = execute.getCount();
             String collect = execute.getItems().stream().map(Object::toString).collect(Collectors.joining(","));
-            String randomUuid = uuidClient.getRandomUuid();
+            String randomUuid = uuidClient.getRandomUuid().replaceAll("\"", "");
 
             VkFriendHistory vkFriendHistory = VkFriendHistory.builder()
                                                              .vk(client.getVk())
@@ -120,8 +120,8 @@ public class VkFriendHistoryService {
 
     @Transactional
     public Map<FriendEnum, List<VkFriend>> getDifferenceByTime(Client client, LocalDateTime fromTime, LocalDateTime toTime) throws ClientException, ApiException {
-        Optional<VkFriendHistory> from = vkFriendHistoryRepository.findTopByTimeAfterOrderByTimeAsc(fromTime);
-        Optional<VkFriendHistory> to = vkFriendHistoryRepository.findTopByTimeBeforeOrderByTimeDesc(toTime);
+        Optional<VkFriendHistory> from = vkFriendHistoryRepository.findTopByVkAndTimeAfterOrderByTimeAsc(client.getVk(), fromTime);
+        Optional<VkFriendHistory> to = vkFriendHistoryRepository.findTopByVkAndTimeBeforeOrderByTimeDesc(client.getVk(), toTime);
 
         String firstContent = from.map(VkFriendHistory::getContent).orElseThrow(() -> {
             log.error("History after time : {} doesn't exist", fromTime);
@@ -162,5 +162,11 @@ public class VkFriendHistoryService {
     public List<VkFriendHistoryDto> getByLogin(Vk vk) {
         List<VkFriendHistory> vkFriendsByVkHistory = vkFriendHistoryRepository.findVkFriendsByVk(vk);
         return vkFriendsByVkHistory.stream().map(friendMapper::vkFriendToVkFriendDto).collect(Collectors.toList());
+    }
+
+    public VkFriendHistoryDto getByLoginAndUuid(Vk vk, String uuid) {
+        Optional<VkFriendHistory> vkFriendsByVkHistory = vkFriendHistoryRepository.findVkFriendHistoryByVkAndUuid(vk, uuid);
+        return vkFriendsByVkHistory.map(friendMapper::vkFriendToVkFriendDto)
+                                   .orElseThrow(() -> new RuntimeException("Uuid was not founded"));
     }
 }
