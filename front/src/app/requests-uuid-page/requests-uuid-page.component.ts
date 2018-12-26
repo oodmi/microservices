@@ -35,9 +35,13 @@ export class RequestsUuidPageComponent implements OnInit {
     }
   }
 
-  getDifference() {
-    const requests = this.dataService.getDifferenceByUUID(this.uuid1, this.uuid2);
-    this.newFriends = requests.NEW;
-    this.removedFriends = requests.REMOVED;
+  async getDifference() {
+    try {
+      const requests = await this.dataService.getDifferenceByUUID(this.uuid1, this.uuid2);
+      this.newFriends = requests.NEW;
+      this.removedFriends = requests.REMOVED;
+    } catch (err) {
+      console.log(err);
+    }
   }
 }

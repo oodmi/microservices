@@ -1,0 +1,39 @@
+.tables-wrapper{
+    margin-top: 50px;
+}
+
+.table-new {
+    width: 50%;
+    float: left;
+    position: relative;
+    h1 {
+        position: absolute;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%)
+    }
+    table{
+        margin-top: 50px;
+    }
+    tr {
+        background-color: rgba(100,220,200,0.5)
+    }
+}
+
+.table-removed {
+    width: 50%;
+    float: left;
+    position: relative;
+    h1 {
+        position: absolute;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%)
+    }
+    table{
+        margin-top: 50px;
+    }
+    tr {
+        background-color: rgba(197, 45, 83, 0.5)
+    }
+}

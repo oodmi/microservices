@@ -22,10 +22,15 @@ export class RequestsDatePageComponent implements OnInit {
   ngOnInit() {
   }
 
-  getDifference() {
-    const requests = this.dataService.getDifferenceByDate(this.dateFrom, this.dateTo);
-    this.newFriends = requests.NEW;
-    this.removedFriends = requests.REMOVED;
+  async getDifference() {
+    try {
+      const requests = await this.dataService.getDifferenceByDate(this.dateFrom, this.dateTo);
+      this.newFriends = requests.NEW;
+      this.removedFriends = requests.REMOVED;
+    } catch (err) {
+      console.log(err);
+    }
+
   }
 
   dateFromChange(event: any) {

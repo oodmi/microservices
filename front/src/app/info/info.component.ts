@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { DataService } from '../core/data.service';
 import { DifferenceStateService } from '../core/difference-state.service';
 
@@ -22,8 +22,12 @@ export class InfoComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit() {
-    this.requests = this.dataService.getRequests();
+  async ngOnInit() {
+    try {
+      this.requests = await this.dataService.getRequests();
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   openDifferenceUUID() {
@@ -33,7 +37,7 @@ export class InfoComponent implements OnInit {
 
   selectRequest(uuid: number) {
     const index = this.selectedRequests.indexOf(uuid);
-    if ( index === -1) {
+    if (index === -1) {
       this.selectedRequests.push(uuid);
     } else {
       this.selectedRequests.splice(index, 1);
