@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 import {
   MatDatepickerModule,
   MatFormFieldModule,
@@ -38,6 +39,7 @@ import { TwoSidesTableComponent } from './shared/components/two-sides-table/two-
   imports: [
     MDBBootstrapModule.forRoot(),
     BrowserModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     MatInputModule,

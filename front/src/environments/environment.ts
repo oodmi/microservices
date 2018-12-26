@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  api: 'http://microservices.eastus.cloudapp.azure.com:4000'
 };
 
 /*
