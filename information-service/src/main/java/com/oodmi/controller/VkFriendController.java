@@ -104,4 +104,12 @@ public class VkFriendController {
         List<VkFriendHistoryDto> byLogin = vkFriendHistoryService.getByLogin(client.getVk());
         return ResponseEntity.ok().body(byLogin);
     }
+
+    @GetMapping(value = "/uuid/{uuid}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<VkFriendHistoryDto> getByLoginAndUuid(@PathVariable String uuid) {
+        HashMap<String, Object> user = authClient.getUser(req.getHeader("Authorization"));
+        final Client client = clientService.findByLogin((String) user.get("name"));
+        VkFriendHistoryDto vkFriendHistoryDto = vkFriendHistoryService.getByLoginAndUuid(client.getVk(), uuid);
+        return ResponseEntity.ok().body(vkFriendHistoryDto);
+    }
 }
