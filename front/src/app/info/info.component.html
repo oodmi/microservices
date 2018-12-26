@@ -7,9 +7,9 @@
     </thead>
     <tbody>
       <tr mdbTableCol *ngFor="let req of requests; let i = index">
-        <th scope="row">{{req.date}}</th>
+        <th scope="row">{{req.time}}</th>
         <td>{{req.uuid}}</td> 
-        <td>{{req.amount}}</td>
+        <td>{{req.count}}</td>
         <td><a [routerLink]='["uuid",req.uuid]'>Показать</a></td>
         <td><mat-checkbox [disabled]="selectedRequests.length === 2 && selectedRequests.indexOf(req.uuid) === -1" (change)="selectRequest(req.uuid)"></mat-checkbox></td>
       </tr>

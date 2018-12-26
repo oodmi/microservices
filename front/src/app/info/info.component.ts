@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../core/data.service';
 import { DifferenceStateService } from '../core/difference-state.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-info',
@@ -25,6 +26,13 @@ export class InfoComponent implements OnInit {
   async ngOnInit() {
     try {
       this.requests = await this.dataService.getRequests();
+      this.requests = this.requests.map(req => {
+        req.time = moment(req.time).format('DD MMM YYYY');
+        req.uuid = req.uuid.replace('"', '');
+        req.uuid = req.uuid.replace('"', '');
+        return req;
+      });
+      console.log(this.requests);
     } catch (err) {
       console.log(err);
     }

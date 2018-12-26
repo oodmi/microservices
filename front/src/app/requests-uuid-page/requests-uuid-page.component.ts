@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../core/data.service';
 import { Friend } from '../shared/model/friend';
 import { DifferenceStateService } from '../core/difference-state.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-requests-uuid-page',
@@ -40,6 +41,14 @@ export class RequestsUuidPageComponent implements OnInit {
       const requests = await this.dataService.getDifferenceByUUID(this.uuid1, this.uuid2);
       this.newFriends = requests.NEW;
       this.removedFriends = requests.REMOVED;
+      this.newFriends.forEach(friend => {
+        friend.time = moment(friend.time).format('DD MMM YYYY');
+        return friend;
+      });
+      this.removedFriends.forEach(friend => {
+        friend.time = moment(friend.time).format('DD MMM YYYY');
+        return friend;
+      });
     } catch (err) {
       console.log(err);
     }

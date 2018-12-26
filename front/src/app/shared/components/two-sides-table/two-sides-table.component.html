@@ -4,7 +4,7 @@
       <table mdbTable>
           <tbody>
               <tr mdbTableCol *ngFor="let item of leftData">
-                  <th scope="row">{{item.photo}}</th>
+                  <th scope="row"><img [src]="item.photo" alt=""></th>
                   <td>{{item.name}}</td>
                   <td>{{item.surname}}</td>
                   <td>{{item.time}}</td>
@@ -17,7 +17,7 @@
       <table mdbTable>
           <tbody>
               <tr mdbTableCol *ngFor="let item of rightData">
-                  <th scope="row">{{item.photo}}</th>
+                  <th scope="row"><img [src]="item.photo" alt=""></th>
                   <td>{{item.name}}</td>
                   <td>{{item.surname}}</td>
                   <td>{{item.time}}</td>

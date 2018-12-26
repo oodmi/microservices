@@ -1,5 +1,9 @@
 .tables-wrapper{
     margin-top: 50px;
+    img {
+        width:50px;
+        height: auto;
+    }
 }
 
 .table-new {
@@ -16,7 +20,13 @@
         margin-top: 50px;
     }
     tr {
-        background-color: rgba(100,220,200,0.5)
+        background-color: rgba(100,220,200,0.5);
+        height: 50px;
+        td {
+            height: 50px;
+            padding-top: 30px;
+            font-size: 17px;
+        }
     }
 }
 
@@ -34,6 +44,12 @@
         margin-top: 50px;
     }
     tr {
-        background-color: rgba(197, 45, 83, 0.5)
+        background-color: rgba(197, 45, 83, 0.5);
+        height: 50px;
+        td {
+            height: 50px;
+            padding-top: 30px;
+            font-size: 17px;
+        }
     }
 }

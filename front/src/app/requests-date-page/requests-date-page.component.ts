@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../core/data.service';
 import { Friend } from '../shared/model/friend';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-requests-date-page',
@@ -27,6 +28,14 @@ export class RequestsDatePageComponent implements OnInit {
       const requests = await this.dataService.getDifferenceByDate(this.dateFrom, this.dateTo);
       this.newFriends = requests.NEW;
       this.removedFriends = requests.REMOVED;
+      this.newFriends.forEach(friend => {
+        friend.time = moment(friend.time).format('DD MMM YYYY');
+        return friend;
+      });
+      this.removedFriends.forEach(friend => {
+        friend.time = moment(friend.time).format('DD MMM YYYY');
+        return friend;
+      });
     } catch (err) {
       console.log(err);
     }

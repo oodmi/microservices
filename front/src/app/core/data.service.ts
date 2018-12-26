@@ -86,11 +86,11 @@ export class DataService {
   }
 
   getDifferenceByDate(date1: Date, date2: Date): any {
-    const dateFrom = moment(date1).format('dd.MM.yyyy HH:mm:ss');
-    const dateTo = moment(date2).format('dd.MM.yyyy HH:mm:ss');
+    const dateFrom = moment(date1).format('DD.MM.YYYY+HH:mm:ss');
+    const dateTo = moment(date2).format('DD.MM.YYYY+HH:mm:ss');
     this.setToken();
 
-    return this.http.get(`${this.api}/information/friend/difference/date?` +
+    return this.http.get(`${this.api}/information/friend/difference/time?` +
     `from=${dateFrom}&to=${dateTo}`, this.httpOptions).toPromise();
     // return {
     //   REMOVED: [
