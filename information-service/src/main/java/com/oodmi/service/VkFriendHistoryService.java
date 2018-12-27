@@ -67,13 +67,18 @@ public class VkFriendHistoryService {
     }
 
     @Transactional
-    public List<VkFriend> getFriendsInfo(Client client, List<String> ids) throws ClientException, ApiException {
-        List<UserXtrCounters> execute = vkApiClient.users()
-                                                   .get(new UserActor(Integer.valueOf(client.getVk().getUserId()),
-                                                           client.getVk().getToken()))
-                                                   .fields(UserField.PHOTO_100, UserField.DOMAIN)
-                                                   .userIds(ids)
-                                                   .execute();
+    public List<VkFriend> getFriendsInfo(Client client, List<String> ids) {
+        List<UserXtrCounters> execute;
+        try {
+            execute = vkApiClient.users()
+                                 .get(new UserActor(Integer.valueOf(client.getVk().getUserId()),
+                                         client.getVk().getToken()))
+                                 .fields(UserField.PHOTO_100, UserField.DOMAIN)
+                                 .userIds(ids)
+                                 .execute();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return execute.stream().map(item -> {
             Integer id = item.getId();
             final Optional<VkFriend> friendOptional = vkFriendService.getById(id.toString());
@@ -101,7 +106,7 @@ public class VkFriendHistoryService {
     }
 
     @Transactional
-    public Map<FriendEnum, List<VkFriend>> getDifference(Client client, String firstUUID, String secondUUID) throws ClientException, ApiException {
+    public Map<FriendEnum, List<VkFriend>> getDifference(Client client, String firstUUID, String secondUUID) throws ApiException {
         Optional<VkFriendHistory> first = vkFriendHistoryRepository.findByUuid(firstUUID);
         Optional<VkFriendHistory> second = vkFriendHistoryRepository.findByUuid(secondUUID);
 
@@ -119,7 +124,7 @@ public class VkFriendHistoryService {
     }
 
     @Transactional
-    public Map<FriendEnum, List<VkFriend>> getDifferenceByTime(Client client, LocalDateTime fromTime, LocalDateTime toTime) throws ClientException, ApiException {
+    public Map<FriendEnum, List<VkFriend>> getDifferenceByTime(Client client, LocalDateTime fromTime, LocalDateTime toTime) throws ApiException {
         Optional<VkFriendHistory> from = vkFriendHistoryRepository.findTopByVkAndTimeAfterOrderByTimeAsc(client.getVk(), fromTime);
         Optional<VkFriendHistory> to = vkFriendHistoryRepository.findTopByVkAndTimeBeforeOrderByTimeDesc(client.getVk(), toTime);
 
@@ -137,7 +142,7 @@ public class VkFriendHistoryService {
     }
 
 
-    private Map<FriendEnum, List<VkFriend>> difference(Client client, String first, String second) throws ClientException, ApiException {
+    private Map<FriendEnum, List<VkFriend>> difference(Client client, String first, String second) {
 
         Map<FriendEnum, List<VkFriend>> result = new HashMap<>(2);
 
@@ -164,9 +169,11 @@ public class VkFriendHistoryService {
         return vkFriendsByVkHistory.stream().map(friendMapper::vkFriendToVkFriendDto).collect(Collectors.toList());
     }
 
-    public VkFriendHistoryDto getByLoginAndUuid(Vk vk, String uuid) {
-        Optional<VkFriendHistory> vkFriendsByVkHistory = vkFriendHistoryRepository.findVkFriendHistoryByVkAndUuid(vk, uuid);
+    public List<VkFriend> getFriendsByLoginAndUuid(Client client, String uuid) {
+        Optional<VkFriendHistory> vkFriendsByVkHistory = vkFriendHistoryRepository
+                .findVkFriendHistoryByVkAndUuid(client.getVk(), uuid);
         return vkFriendsByVkHistory.map(friendMapper::vkFriendToVkFriendDto)
+                                   .map(it -> getFriendsInfo(client, new ArrayList<>(Arrays.asList(it.getContent().split(",")))))
                                    .orElseThrow(() -> new RuntimeException("Uuid was not founded"));
     }
 }
