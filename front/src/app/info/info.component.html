@@ -2,6 +2,8 @@
   <h1>История записей статистики друзей</h1>
   <i class="fa fa-lg fa-refresh" aria-hidden="true" (click)="update()"></i>
 </div>
+
+<button mat-raised-button [disabled]="selectedRequests.length < 2" (click)="openDifferenceUUID()">Посмотреть разницу</button>
 <div class='table-wrapper'>
   <table mdbTable>
     <thead>
@@ -18,7 +20,5 @@
         <td><mat-checkbox [disabled]="selectedRequests.length === 2 && selectedRequests.indexOf(req.uuid) === -1" (change)="selectRequest(req.uuid)"></mat-checkbox></td>
       </tr>
     </tbody>
-
-    <button mat-raised-button [disabled]="selectedRequests.length < 2" (click)="openDifferenceUUID()">Посмотреть разницу</button>
   </table>
 </div>
