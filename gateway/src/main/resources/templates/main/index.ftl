@@ -42,10 +42,12 @@ margin-top: 20px;
     });
     $(function () {
         var el = $("#token");
+        if (el.text()) {
         localStorage.setItem("token", el.text());
         document.cookie = 'token='+el.text()+'; token_expires=Fri, 3 Aug 2020 20:47:11 UTC; path=/';
         el.text('');
         window.location.href= "http://microservices.eastus.cloudapp.azure.com:9999/";
+        }
     });
 
 </script>
