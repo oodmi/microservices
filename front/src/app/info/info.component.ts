@@ -24,15 +24,28 @@ export class InfoComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.requests = await this.getRequests();
+  }
+
+  async getRequests() {
     try {
-      this.requests = await this.dataService.getRequests();
-      this.requests = this.requests.map(req => {
+      let requests = await this.dataService.getRequests();
+      requests = requests.sort((a, b) => {
+        const da = new Date(a);
+        const db = new Date(b);
+        if (da > db) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      requests = requests.map(req => {
         req.time = moment(req.time).format('DD MMM YYYY');
         req.uuid = req.uuid.replace('"', '');
         req.uuid = req.uuid.replace('"', '');
         return req;
       });
-      console.log(this.requests);
+      return requests;
     } catch (err) {
       console.log(err);
     }
@@ -49,6 +62,16 @@ export class InfoComponent implements OnInit {
       this.selectedRequests.push(uuid);
     } else {
       this.selectedRequests.splice(index, 1);
+    }
+  }
+
+  async update() {
+    try {
+      await this.dataService.updateStatistics();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.requests = await this.getRequests();
     }
   }
 

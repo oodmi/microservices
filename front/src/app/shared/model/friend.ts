@@ -8,6 +8,7 @@ export class Friend {
         public photo?: string,
         public time?: string,
         public removed?: boolean,
-        public uuid?: string
+        public uuid?: string,
+        public fullName?: string
     ) {}
 }

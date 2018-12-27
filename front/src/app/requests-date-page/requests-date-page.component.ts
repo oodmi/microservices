@@ -13,6 +13,9 @@ export class RequestsDatePageComponent implements OnInit {
   dateFrom: Date;
   dateTo: Date;
 
+  placeholder404 = 'Данные отсутствуют';
+  error = false;
+
   newFriends: Array<Friend>;
   removedFriends: Array<Friend>;
 
@@ -36,8 +39,10 @@ export class RequestsDatePageComponent implements OnInit {
         friend.time = moment(friend.time).format('DD MMM YYYY');
         return friend;
       });
+      this.error = false;
     } catch (err) {
       console.log(err);
+      this.error = true;
     }
 
   }

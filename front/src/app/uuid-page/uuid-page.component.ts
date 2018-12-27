@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../core/data.service';
 import { Friend } from '../shared/model/friend';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-uuid-page',
@@ -10,12 +11,11 @@ import { Friend } from '../shared/model/friend';
 })
 export class UuidPageComponent implements OnInit {
 
-
+  uuid: string;
   friends: Array<Friend> = [];
-  headers = ['id', 'Photo', 'Name', 'Surname', 'Email', 'Time'];
+  headers = ['ID', 'Фото', 'Имя', 'Домен', 'Почта', ''];
   filters = {
-    dateFrom: null,
-    dateTo: null
+    name: null
   };
 
   constructor(
@@ -24,27 +24,26 @@ export class UuidPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.friends = this.dataService.getByUUID(params.uuid);
+    this.route.params.subscribe(async (params) => {
+      this.uuid = params.uuid;
+      this.friends = await this.dataService.getByUUID(params.uuid);
+      this.friends = this.friends.map(friend => {
+        friend.fullName = friend.name + ' ' + friend.surname;
+        friend.time = moment(friend.time).format('DD MMM YYYY');
+        return friend;
+      });
     });
-  }
-
-  dateFromChange(event: any) {
-    this.filters.dateFrom = new Date(event.value);
-  }
-
-  dateToChange(event: any) {
-    this.filters.dateTo = new Date(event.value);
   }
 
   viewFriends() {
     let view = this.friends;
-    if (this.filters.dateFrom) {
-      view = view.filter(friend => new Date(friend.time) >= this.filters.dateFrom);
-    }
-    if (this.filters.dateTo) {
-      view = view.filter(friend => new Date(friend.time) <= this.filters.dateTo);
-    }
+   if (this.filters.name) {
+     view = view.filter(friend => {
+       const fullName = friend.fullName.toLowerCase();
+       const name = this.filters.name.toLowerCase();
+       return fullName.indexOf(name) !== -1;
+     });
+   }
     return view;
   }
 

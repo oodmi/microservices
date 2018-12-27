@@ -1,12 +1,19 @@
-<h1>Requests uuid page</h1>
-<div>
-    <mat-form-field class="example-full-width">
-        <input matInput placeholder="Введите UUID №1" [(ngModel)]='uuid1'>
-      </mat-form-field>
+<div class="header-wrapper">
+    <h1>Поиск по UUID</h1>
+</div>
+<div class="filters-wrapper">
+  <div class="filters">
+      <div class="first-field">
       <mat-form-field class="example-full-width">
-        <input matInput placeholder="Введите UUID №2" [(ngModel)]='uuid2'>
-      </mat-form-field>
-
-      <button mat-raised-button (click)="getDifference()">Показать разницу</button>
+          <input matInput placeholder="Введите UUID №1" [(ngModel)]='uuid1'>
+        </mat-form-field>
+  </div>
+  <div class="second-field">
+      <mat-form-field class="example-full-width">
+          <input matInput placeholder="Введите UUID №2" [(ngModel)]='uuid2'>
+        </mat-form-field>
+  </div>
+  <button mat-raised-button (click)="getDifference()">Показать разницу</button>
+  </div>
 </div>
 <app-two-sides-table *ngIf="newFriends && removedFriends" [leftData]="newFriends" [rightData]="removedFriends"></app-two-sides-table>

@@ -1,5 +1,9 @@
-<h1>INFO</h1>
-<table mdbTable>
+<div class="header-wrapper">
+  <h1>История записей статистики друзей</h1>
+  <i class="fa fa-lg fa-refresh" aria-hidden="true" (click)="update()"></i>
+</div>
+<div class='table-wrapper'>
+  <table mdbTable>
     <thead>
       <tr>
         <th *ngFor="let head of headers" scope="col">{{head}} </th>
@@ -17,3 +21,4 @@
 
     <button mat-raised-button [disabled]="selectedRequests.length < 2" (click)="openDifferenceUUID()">Посмотреть разницу</button>
   </table>
+</div>

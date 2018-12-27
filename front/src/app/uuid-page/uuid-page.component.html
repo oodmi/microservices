@@ -1,35 +1,33 @@
-<div class='filters-wrapper'>
-  <h1>Фильтры</h1>
-  <div>
-      <mat-form-field>
-          <input matInput [matDatepicker]="pickerFrom" (dateChange)="dateFromChange($event)" placeholder="Начальная дата">
-          <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-          <mat-datepicker #pickerFrom></mat-datepicker>
-      </mat-form-field>
-  </div>
-  <div>
-      <mat-form-field>
-          <input matInput [matDatepicker]="pickerTo" (dateChange)="dateToChange($event)" placeholder="Конечная дата">
-          <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
-          <mat-datepicker #pickerTo></mat-datepicker>
-      </mat-form-field>
-  </div>
+<div class="header-wrapper">
+    <h1>UUID {{uuid}}</h1>
+</div>
+<div class="filters-wrapper">
+    <div class="filters">
+        <div class="first-field">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Фильтр по имени" [(ngModel)]='filters.name'>
+              </mat-form-field>
+        </div>
+    </div>
 </div>
 
-<table mdbTable>
-<thead>
-  <tr>
-    <th *ngFor="let head of headers" scope="col">{{head}} </th>
-  </tr>
-</thead>
-<tbody>
-  <tr mdbTableCol *ngFor="let friend of viewFriends()">
-    <th scope="row">{{friend.id}}</th>
-    <td>{{friend.photo}}</td> 
-    <td>{{friend.name}}</td>
-    <td>{{friend.surname}}</td>
-    <td>{{friend.email}}</td>
-    <td>{{friend.time}}</td>
-  </tr>
-</tbody>
-</table>
+
+<div class="table-wrapper">
+    <table mdbTable>
+        <thead>
+          <tr>
+            <th *ngFor="let head of headers" scope="col">{{head}} </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr mdbTableCol *ngFor="let friend of viewFriends()">
+            <th scope="row">{{friend.id}}</th>
+            <td><img [src]="friend.photo" alt=""></td> 
+            <td>{{friend.fullName}}</td>
+            <td>{{friend.domain}}</td>
+            <td>{{friend.email? friend.email : 'отсутствует'}}</td>
+            <td>{{friend.time}}</td>
+          </tr>
+        </tbody>
+        </table>
+</div>

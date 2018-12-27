@@ -1,21 +1,25 @@
-<h1>Requests uuid page</h1>
-
-<div class='filters-wrapper'>
-    <div>
-        <mat-form-field>
-            <input matInput [matDatepicker]="pickerFrom" (dateChange)="dateFromChange($event)" placeholder="Начальная дата">
-            <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-            <mat-datepicker #pickerFrom></mat-datepicker>
-        </mat-form-field>
-    </div>
-    <div>
-        <mat-form-field>
-            <input matInput [matDatepicker]="pickerTo" (dateChange)="dateToChange($event)" placeholder="Конечная дата">
-            <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
-            <mat-datepicker #pickerTo></mat-datepicker>
-        </mat-form-field>
-    </div>
-    <button mat-raised-button (click)="getDifference()">Показать разницу</button>
+<div class="header-wrapper">
+    <h1>Поиск по дате</h1>
 </div>
+<div class="filters-wrapper">
+    <div class="filters">
+        <div class="first-field">
+            <mat-form-field>
+                <input matInput [matDatepicker]="pickerFrom" (dateChange)="dateFromChange($event)" placeholder="Начальная дата">
+                <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFrom></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="second-field">
+            <mat-form-field>
+                <input matInput [matDatepicker]="pickerTo" (dateChange)="dateToChange($event)" placeholder="Конечная дата">
+                <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                <mat-datepicker #pickerTo></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <button mat-raised-button (click)="getDifference()">Показать разницу</button>
+    </div>
+</div>
+<h2 *ngIf="error">Данные отсутствуют</h2>
 
-<app-two-sides-table *ngIf="newFriends && removedFriends" [leftData]="newFriends" [rightData]="removedFriends"></app-two-sides-table>
+<app-two-sides-table *ngIf="!error && newFriends && removedFriends" [leftData]="newFriends" [rightData]="removedFriends"></app-two-sides-table>
