@@ -1,9 +1,31 @@
 <#-- @ftlroot ".." -->
 <#include "/partials/header.ftl">
- <div class="row">
-     <button id="vk" class="waves-effect waves-light btn">Vk</button>
-     <div id="token" hidden>${token}</div>
- </div>
+    <h1 style="text-align: center">Добро пожаловать!</h1>
+    <div style="
+    text-align: center;
+    font-family: Arial;
+    font-size: 20px;
+">С помощью этого приложения вы можете посмотреть статистику добавления и удаления друзей.</div>
+    <div style="
+text-align: center;
+font-family: Arial;
+font-size: 20px;
+margin-top: 20px;
+">Также вы можете сохранять состояние списка друзей и просматривать их в будущем!</div>
+    <div style="
+text-align: center;
+font-family: Arial;
+font-size: 20px;
+margin-top: 20px;
+">Просто зайдите через ВК!</div>
+<div style="position:relative; margin-top: 20px;">
+    <button style="
+    position:absolute;    
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, 0%);" id="vk" class="waves-effect waves-light btn">ВОЙТИ</button>
+    <div id="token" hidden>${token}</div>
+</div>
 
 <script>
 
@@ -20,13 +42,10 @@
     });
     $(function () {
         var el = $("#token");
-        console.log(el.text());
         localStorage.setItem("token", el.text());
         document.cookie = 'token='+el.text()+'; token_expires=Fri, 3 Aug 2020 20:47:11 UTC; path=/';
-        console.log(document.cookie.replace(/(?:(?:^|.*;s*)token*=s*([^;]*).*$)|^.*$/, '$1') );
-        console.log(document.cookie.replace(/(?:(?:^|.*;s*)token*=s*([^;]*).*$)|^.*$/, '$1') );
         el.text('');
+        window.location.href= "http://microservices.eastus.cloudapp.azure.com:9999/";
     });
 
 </script>
-<#include "/partials/footer.ftl">
