@@ -18,6 +18,8 @@ import com.vk.api.sdk.objects.users.UserXtrCounters;
 import com.vk.api.sdk.queries.users.UserField;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -169,6 +171,21 @@ public class VkFriendHistoryService {
         return vkFriendsByVkHistory.stream().map(friendMapper::vkFriendToVkFriendDto).collect(Collectors.toList());
     }
 
+    @Transactional
+    public List<VkFriendHistoryDto> getByLogin(Vk vk, int page, int size) {
+        List<VkFriendHistory> vkFriendsByVkHistory = vkFriendHistoryRepository
+                .findVkFriendsByVkOrderByTime(vk, PageRequest.of(page - 1, size));
+        return vkFriendsByVkHistory.stream().map(friendMapper::vkFriendToVkFriendDto).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public Long getCountByLogin(Vk vk) {
+        return vkFriendHistoryRepository.count(Example.of(new VkFriendHistory()
+                .setVk(vk)
+                .setTime(null)));
+    }
+
+    @Transactional
     public List<VkFriend> getFriendsByLoginAndUuid(Client client, String uuid) {
         Optional<VkFriendHistory> vkFriendsByVkHistory = vkFriendHistoryRepository
                 .findVkFriendHistoryByVkAndUuid(client.getVk(), uuid);

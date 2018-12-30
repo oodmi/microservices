@@ -2,6 +2,7 @@ package com.oodmi.repository;
 
 import com.oodmi.domain.entity.Vk;
 import com.oodmi.domain.entity.VkFriendHistory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +19,8 @@ public interface VkFriendHistoryRepository extends JpaRepository<VkFriendHistory
     Optional<VkFriendHistory> findTopByVkAndTimeBeforeOrderByTimeDesc(Vk vk, LocalDateTime localDateTime);
 
     List<VkFriendHistory> findVkFriendsByVk(Vk vk);
+
+    List<VkFriendHistory> findVkFriendsByVkOrderByTime(Vk vk, Pageable pageable);
 
     Optional<VkFriendHistory> findVkFriendHistoryByVkAndUuid(Vk vk, String uuid);
 }
