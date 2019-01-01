@@ -8,7 +8,6 @@ import com.oodmi.domain.type.FriendEnum;
 import com.oodmi.service.ClientService;
 import com.oodmi.service.VkFriendHistoryService;
 import com.vk.api.sdk.exceptions.ApiException;
-import com.vk.api.sdk.exceptions.ClientException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
@@ -92,5 +91,23 @@ public class VkFriendController {
         final Client client = clientService.findByLogin((String) user.get("name"));
         List<VkFriendHistoryDto> byLogin = vkFriendHistoryService.getByLogin(client.getVk(), page, size);
         return ResponseEntity.ok().body(byLogin);
+    }
+
+    @GetMapping(value = "/uuid/{uuid}/page/{page}/size/{size}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<List<VkFriend>> getAllByLoginAndUuid(@PathVariable String uuid,
+                                                               @PathVariable("page") Integer page,
+                                                               @PathVariable("size") Integer size) {
+        HashMap<String, Object> user = authClient.getUser(req.getHeader("Authorization"));
+        final Client client = clientService.findByLogin((String) user.get("name"));
+        List<VkFriend> friends = vkFriendHistoryService.getFriendsByLoginAndUuid(client, uuid, page, size);
+        return ResponseEntity.ok().body(friends);
+    }
+
+    @GetMapping(value = "/uuid/{uuid}/count", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<Long> getCountByLoginAndUuid(@PathVariable String uuid) {
+        HashMap<String, Object> user = authClient.getUser(req.getHeader("Authorization"));
+        final Client client = clientService.findByLogin((String) user.get("name"));
+        Long count = vkFriendHistoryService.getCountFriendByLoginAndUuid(client, uuid);
+        return ResponseEntity.ok().body(count);
     }
 }

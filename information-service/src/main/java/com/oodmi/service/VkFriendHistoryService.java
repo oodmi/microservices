@@ -193,4 +193,26 @@ public class VkFriendHistoryService {
                                    .map(it -> getFriendsInfo(client, new ArrayList<>(Arrays.asList(it.getContent().split(",")))))
                                    .orElseThrow(() -> new RuntimeException("Uuid was not founded"));
     }
+
+    @Transactional
+    public Long getCountFriendByLoginAndUuid(Client client, String uuid) {
+        Optional<VkFriendHistory> vkFriendsByVkHistory = vkFriendHistoryRepository
+                .findVkFriendHistoryByVkAndUuid(client.getVk(), uuid);
+        return vkFriendsByVkHistory.map(VkFriendHistory::getCount)
+                                   .orElseThrow(() -> new RuntimeException("Uuid was not founded"));
+    }
+
+    @Transactional
+    public List<VkFriend> getFriendsByLoginAndUuid(Client client, String uuid, int page, int size) {
+        Optional<VkFriendHistory> vkFriendsByVkHistory = vkFriendHistoryRepository
+                .findVkFriendHistoryByVkAndUuid(client.getVk(), uuid);
+        int offset = (page - 1) * size;
+        return vkFriendsByVkHistory.map(friendMapper::vkFriendToVkFriendDto)
+                                   .map(it -> {
+                                       ArrayList<String> ids = new ArrayList<>(Arrays.asList(it.getContent().split(",")));
+                                       List<String> strings = ids.subList(offset, offset + size);
+                                       return getFriendsInfo(client, strings);
+                                   })
+                                   .orElseThrow(() -> new RuntimeException("Uuid was not founded"));
+    }
 }
