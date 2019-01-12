@@ -1,10 +1,12 @@
 package com.oodmi.domain.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Data
 @Builder
@@ -13,7 +15,6 @@ import java.util.Set;
 @Accessors(chain = true)
 @Entity
 @Table(name = "vk")
-@ToString(exclude = "friendsHistory")
 public class Vk {
 
     @Id
