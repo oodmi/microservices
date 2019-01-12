@@ -31,6 +31,4 @@ public class Vk {
     @Builder.Default
     private Boolean valid = Boolean.TRUE;
 
-    @OneToMany(mappedBy = "vk", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<VkFriendHistory> friendsHistory;
 }
