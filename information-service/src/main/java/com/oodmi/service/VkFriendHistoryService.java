@@ -109,20 +109,24 @@ public class VkFriendHistoryService {
 
     @Transactional
     public Map<FriendEnum, List<VkFriend>> getDifference(Client client, String firstUUID, String secondUUID) throws ApiException {
-        Optional<VkFriendHistory> first = vkFriendHistoryRepository.findByUuid(firstUUID);
-        Optional<VkFriendHistory> second = vkFriendHistoryRepository.findByUuid(secondUUID);
-
-        String firstContent = first.map(VkFriendHistory::getContent).orElseThrow(() -> {
+        VkFriendHistory first = vkFriendHistoryRepository.findByUuid(firstUUID).map(it -> it).orElseThrow(() -> {
             log.error("UUID : {} doesn't exist", firstUUID);
             return new RuntimeException("UUID : " + firstUUID + " doesn't exist");
         });
-
-        String secondContent = second.map(VkFriendHistory::getContent).orElseThrow(() -> {
+        VkFriendHistory second = vkFriendHistoryRepository.findByUuid(secondUUID).orElseThrow(() -> {
             log.error("UUID : {} doesn't exist", secondUUID);
             return new RuntimeException("UUID : " + secondUUID + " doesn't exist");
         });
 
-        return difference(client, firstContent, secondContent);
+        String firstContent = first.getContent();
+
+        String secondContent = second.getContent();
+
+        if (first.getTime().isBefore(second.getTime())) {
+            return difference(client, firstContent, secondContent);
+        } else {
+            return difference(client, secondContent, firstContent);
+        }
     }
 
     @Transactional
