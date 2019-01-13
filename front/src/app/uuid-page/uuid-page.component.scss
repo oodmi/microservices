@@ -59,3 +59,29 @@ h1 {
     }
 }
 
+.pagination-wrapper {
+    position: relative;
+}
+.pagination{
+    position: absolute;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.left, .right {
+    padding: 10px 20px;
+    border: 1px solid gray;
+    border-radius: 20%;
+    cursor: pointer;
+
+    &:hover{
+        background-color: rgba(0,0,0,0.1);
+    }
+}
+
+.pages {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 15px;
+}

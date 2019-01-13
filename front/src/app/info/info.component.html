@@ -1,6 +1,6 @@
 <div class="header-wrapper">
   <h1>История записей статистики друзей</h1>
-  <i class="fa fa-lg fa-refresh" aria-hidden="true" (click)="update()"></i>
+  <i class="fa fa-lg fa-refresh upd" aria-hidden="true" (click)="update()"></i>
 </div>
 
 <button mat-raised-button [disabled]="selectedRequests.length < 2" (click)="openDifferenceUUID()">Посмотреть разницу</button>
@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr mdbTableCol *ngFor="let req of requests; let i = index">
+      <tr mdbTableCol *ngFor="let req of viewRequests(); let i = index">
         <th scope="row">{{req.time}}</th>
         <td>{{req.uuid}}</td> 
         <td>{{req.count}}</td>
@@ -20,5 +20,16 @@
         <td><mat-checkbox [disabled]="selectedRequests.length === 2 && selectedRequests.indexOf(req.uuid) === -1" (change)="selectRequest(req.uuid)"></mat-checkbox></td>
       </tr>
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="5" class="pagination-wrapper">
+                <div class="pagination">
+                    <div (click)="prevPage()" class="left"><i class="fa fa-angle-double-left"></i></div>
+                    <div class="pages">{{firstIndex}} - {{lastIndex}} of {{totalItems}}</div>
+                    <div (click)="nextPage()" class="right"><i class="fa fa-angle-double-right"></i></div>
+                </div>
+            </td>
+        </tr>
+    </tfoot>
   </table>
 </div>

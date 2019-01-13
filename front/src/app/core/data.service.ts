@@ -26,7 +26,7 @@ export class DataService {
         token = localStorage.getItem('token');
       }
       if (!token) {
-        window.location.href = 'http://microservices.eastus.cloudapp.azure.com:4000';
+        // window.location.href = 'http://microservices.eastus.cloudapp.azure.com:4000';
       } else {
         this.httpOptions = {
           headers: new HttpHeaders({

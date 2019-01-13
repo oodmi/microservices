@@ -29,5 +29,16 @@
             <td>{{friend.time}}</td>
           </tr>
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6" class="pagination-wrapper">
+                    <div class="pagination">
+                        <div (click)="prevPage()" class="left"><i class="fa fa-angle-double-left"></i></div>
+                        <div class="pages">{{firstIndex}} - {{lastIndex}} of {{totalItems}}</div>
+                        <div (click)="nextPage()" class="right"><i class="fa fa-angle-double-right"></i></div>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
         </table>
 </div>

@@ -12,7 +12,7 @@ h1 {
     transform: translate(-50%, -50%);
 }
 
-i {
+i.upd {
     margin-left: 360px;
     cursor: pointer;
     position: absolute;
@@ -28,4 +28,32 @@ i {
 button {
     float:right;
     margin-right:20px;
+}
+
+.pagination-wrapper {
+    position: relative;
+}
+.pagination{
+    margin-top: 10px;
+    position: absolute;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.left, .right {
+    padding: 10px 20px;
+    border: 1px solid gray;
+    border-radius: 20%;
+    cursor: pointer;
+
+    &:hover{
+        background-color: rgba(0,0,0,0.1);
+    }
+}
+
+.pages {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 15px;
 }

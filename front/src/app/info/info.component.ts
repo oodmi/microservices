@@ -11,6 +11,13 @@ import * as moment from 'moment';
 })
 export class InfoComponent implements OnInit {
 
+  firstIndex = 1;
+  lastIndex = 1;
+  pagesCount;
+  currentPage;
+  totalItems;
+  itemsPerPage = 5;
+
   requests = [];
 
   selectedRequests = [];
@@ -25,6 +32,11 @@ export class InfoComponent implements OnInit {
 
   async ngOnInit() {
     this.requests = await this.getRequests();
+    this.totalItems = this.requests.length;
+    this.pagesCount = Math.ceil(this.totalItems / this.itemsPerPage);
+    this.currentPage = 0;
+    this.firstIndex = 1;
+    this.lastIndex = this.itemsPerPage;
   }
 
   async getRequests() {
@@ -72,6 +84,40 @@ export class InfoComponent implements OnInit {
       console.log(error);
     } finally {
       this.requests = await this.getRequests();
+    }
+  }
+
+  viewRequests() {
+    let view = this.requests;
+    if (this.totalItems !== view.length) {
+      this.currentPage = 0;
+      this.totalItems = view.length;
+      this.pagesCount = Math.ceil(this.totalItems / this.itemsPerPage);
+      this.firstIndex = 1;
+      this.lastIndex = this.itemsPerPage;
+    }
+
+    view = view.slice(this.currentPage * this.itemsPerPage, this.currentPage * this.itemsPerPage + this.itemsPerPage);
+    return view;
+  }
+
+
+  nextPage() {
+    if (this.currentPage < this.pagesCount - 1) {
+      this.currentPage++;
+      this.firstIndex = this.currentPage * this.itemsPerPage + 1;
+      this.lastIndex = this.currentPage * this.itemsPerPage + this.itemsPerPage;
+      if (this.lastIndex > this.totalItems){
+        this.lastIndex = this.totalItems;
+      }
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.firstIndex = this.currentPage * this.itemsPerPage + 1;
+      this.lastIndex = this.currentPage * this.itemsPerPage + this.itemsPerPage;
     }
   }
 
