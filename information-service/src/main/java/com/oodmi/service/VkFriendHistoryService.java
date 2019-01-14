@@ -1,6 +1,8 @@
 package com.oodmi.service;
 
+import com.oodmi.client.DifferenceClient;
 import com.oodmi.client.UuidClient;
+import com.oodmi.domain.DifferenceRequest;
 import com.oodmi.domain.dto.VkFriendHistoryDto;
 import com.oodmi.domain.entity.Client;
 import com.oodmi.domain.entity.Vk;
@@ -33,6 +35,7 @@ import java.util.stream.Collectors;
 public class VkFriendHistoryService {
 
     private final UuidClient uuidClient;
+    private final DifferenceClient differenceClient;
     private final VkApiClient vkApiClient;
     private final VkFriendService vkFriendService;
     private final VkFriendHistoryRepository vkFriendHistoryRepository;
@@ -108,8 +111,8 @@ public class VkFriendHistoryService {
     }
 
     @Transactional
-    public Map<FriendEnum, List<VkFriend>> getDifference(Client client, String firstUUID, String secondUUID) throws ApiException {
-        VkFriendHistory first = vkFriendHistoryRepository.findByUuid(firstUUID).map(it -> it).orElseThrow(() -> {
+    public Map<FriendEnum, List<VkFriend>> getDifference(Client client, String firstUUID, String secondUUID) {
+        VkFriendHistory first = vkFriendHistoryRepository.findByUuid(firstUUID).orElseThrow(() -> {
             log.error("UUID : {} doesn't exist", firstUUID);
             return new RuntimeException("UUID : " + firstUUID + " doesn't exist");
         });
@@ -119,7 +122,6 @@ public class VkFriendHistoryService {
         });
 
         String firstContent = first.getContent();
-
         String secondContent = second.getContent();
 
         if (first.getTime().isBefore(second.getTime())) {
@@ -130,7 +132,7 @@ public class VkFriendHistoryService {
     }
 
     @Transactional
-    public Map<FriendEnum, List<VkFriend>> getDifferenceByTime(Client client, LocalDateTime fromTime, LocalDateTime toTime) throws ApiException {
+    public Map<FriendEnum, List<VkFriend>> getDifferenceByTime(Client client, LocalDateTime fromTime, LocalDateTime toTime) {
         Optional<VkFriendHistory> from = vkFriendHistoryRepository.findTopByVkAndTimeAfterOrderByTimeAsc(client.getVk(), fromTime);
         Optional<VkFriendHistory> to = vkFriendHistoryRepository.findTopByVkAndTimeBeforeOrderByTimeDesc(client.getVk(), toTime);
 
@@ -150,21 +152,11 @@ public class VkFriendHistoryService {
 
     private Map<FriendEnum, List<VkFriend>> difference(Client client, String first, String second) {
 
+        Map<FriendEnum, List<String>> difference = differenceClient.difference(new DifferenceRequest(first, second));
+
         Map<FriendEnum, List<VkFriend>> result = new HashMap<>(2);
-
-        String[] firstArray = first.split(",");
-        String[] firstArrayCopy = Arrays.copyOf(firstArray, firstArray.length);
-
-        List<String> firstList = new ArrayList<>(Arrays.asList(firstArray)); // a b c
-        List<String> secondList = new ArrayList<>(Arrays.asList(second.split(",")));// b c d
-
-        firstList.removeAll(secondList); // a
-
-        secondList.removeAll(Arrays.asList(firstArrayCopy)); //d
-
-        result.put(FriendEnum.REMOVED, getFriendsInfo(client, firstList));
-        result.put(FriendEnum.NEW, getFriendsInfo(client, secondList));
-
+        result.put(FriendEnum.REMOVED, getFriendsInfo(client, difference.get(FriendEnum.REMOVED)));
+        result.put(FriendEnum.NEW, getFriendsInfo(client, difference.get(FriendEnum.NEW)));
 
         return result;
     }
