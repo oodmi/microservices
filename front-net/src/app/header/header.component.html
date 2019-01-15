@@ -7,16 +7,16 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item" [ngClass]="{'active':currentPage === '/'}" >
-          <a class="nav-link" routerLink="">История <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item" [ngClass]="{'active':currentPage === '/difference/uuid'}">
-          <a class="nav-link" routerLink="difference/uuid">Сравнение по UUID <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item" [ngClass]="{'active':currentPage === '/difference/date'}">
-          <a class="nav-link" routerLink="difference/date">Сравнение по Дате <span class="sr-only">(current)</span></a>
+        <li class="nav-item" >
+          <a class="nav-link" href="http://microservices.eastus.cloudapp.azure.com:9999/">История <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="http://microservices.eastus.cloudapp.azure.com:9999/difference/uuid">Сравнение по UUID <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="http://microservices.eastus.cloudapp.azure.com:9999/difference/date">Сравнение по Дате <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
           <a class="nav-link" href="">Статистика <span class="sr-only">(current)</span></a>
         </li>
       </ul>
