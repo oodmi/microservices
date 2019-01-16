@@ -7,4 +7,4 @@ include 'uuid'
 include 'scheduler-service'
 include 'api'
 include 'information-service'
-
+include 'statistic'
