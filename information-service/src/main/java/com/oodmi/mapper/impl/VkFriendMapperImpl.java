@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class VkFriendMapperImpl implements VkFriendMapper {
     @Override
-    public VkFriendHistoryDto vkFriendToVkFriendDto(VkFriendHistory friend) {
+    public VkFriendHistoryDto vkFriendHistoryToVkFriendHistoryDto(VkFriendHistory friend) {
         return VkFriendHistoryDto.builder().uuid(friend.getUuid())
                                  .content(friend.getContent())
                                  .time(friend.getTime())

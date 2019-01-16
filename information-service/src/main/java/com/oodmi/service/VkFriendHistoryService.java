@@ -164,14 +164,14 @@ public class VkFriendHistoryService {
     @Transactional
     public List<VkFriendHistoryDto> getByLogin(Vk vk) {
         List<VkFriendHistory> vkFriendsByVkHistory = vkFriendHistoryRepository.findVkFriendsByVk(vk);
-        return vkFriendsByVkHistory.stream().map(friendMapper::vkFriendToVkFriendDto).collect(Collectors.toList());
+        return vkFriendsByVkHistory.stream().map(friendMapper::vkFriendHistoryToVkFriendHistoryDto).collect(Collectors.toList());
     }
 
     @Transactional
     public List<VkFriendHistoryDto> getByLogin(Vk vk, int page, int size) {
         List<VkFriendHistory> vkFriendsByVkHistory = vkFriendHistoryRepository
                 .findVkFriendsByVkOrderByTime(vk, PageRequest.of(page - 1, size));
-        return vkFriendsByVkHistory.stream().map(friendMapper::vkFriendToVkFriendDto).collect(Collectors.toList());
+        return vkFriendsByVkHistory.stream().map(friendMapper::vkFriendHistoryToVkFriendHistoryDto).collect(Collectors.toList());
     }
 
     @Transactional
@@ -185,7 +185,7 @@ public class VkFriendHistoryService {
     public List<VkFriend> getFriendsByLoginAndUuid(Client client, String uuid) {
         Optional<VkFriendHistory> vkFriendsByVkHistory = vkFriendHistoryRepository
                 .findVkFriendHistoryByVkAndUuid(client.getVk(), uuid);
-        return vkFriendsByVkHistory.map(friendMapper::vkFriendToVkFriendDto)
+        return vkFriendsByVkHistory.map(friendMapper::vkFriendHistoryToVkFriendHistoryDto)
                                    .map(it -> getFriendsInfo(client, new ArrayList<>(Arrays.asList(it.getContent().split(",")))))
                                    .orElseThrow(() -> new RuntimeException("Uuid was not founded"));
     }
@@ -203,7 +203,7 @@ public class VkFriendHistoryService {
         Optional<VkFriendHistory> vkFriendsByVkHistory = vkFriendHistoryRepository
                 .findVkFriendHistoryByVkAndUuid(client.getVk(), uuid);
         int offset = (page - 1) * size;
-        return vkFriendsByVkHistory.map(friendMapper::vkFriendToVkFriendDto)
+        return vkFriendsByVkHistory.map(friendMapper::vkFriendHistoryToVkFriendHistoryDto)
                                    .map(it -> {
                                        ArrayList<String> ids = new ArrayList<>(Arrays.asList(it.getContent().split(",")));
                                        List<String> strings = ids.subList(offset, offset + size);

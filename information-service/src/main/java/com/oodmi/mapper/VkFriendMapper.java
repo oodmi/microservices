@@ -5,5 +5,5 @@ import com.oodmi.domain.entity.VkFriendHistory;
 
 public interface VkFriendMapper {
 
-    VkFriendHistoryDto vkFriendToVkFriendDto(VkFriendHistory friend);
+    VkFriendHistoryDto vkFriendHistoryToVkFriendHistoryDto(VkFriendHistory friend);
 }
