@@ -1,7 +1,22 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <app-header></app-header>
 
-<div class="chart-wrapper">
+<div *ngIf="chartDatasets.length === 0" class="loader-wrapper">
+  <circle-progress
+  [percent]="85"
+  [radius]="100"
+  [outerStrokeWidth]="16"
+  [innerStrokeWidth]="8"
+  [outerStrokeColor]="'#234599'"
+  [innerStrokeColor]="'#4596E5'"
+  [animation]="true"
+  [animationDuration]="300"
+  [showUnits]="false"
+  [showTitle]="false"
+  [showSubtitle]="false"
+></circle-progress>
+</div>
+<div *ngIf="chartDatasets.length !== 0" class="chart-wrapper">
   <div style="display: block">
     <canvas mdbChart
         [chartType]="chartType"

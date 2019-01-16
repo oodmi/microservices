@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { DataService } from './core/data.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-root',
@@ -7,12 +9,26 @@ import { Component } from '@angular/core';
 })
 
 
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  constructor(
+    private dataService : DataService
+  ){}
+
+  async ngOnInit(){
+    this.dataService.setToken();
+    const chartData = await this.dataService.getChartData();
+    const chartLabels = chartData.map(d => moment(d.date).format('DD MMM hh:mm:ss'));
+    const chartDataset = {
+      data : chartData.map(d => d.amount),
+      label : 'Мои друзья'
+    }
+    this.chartDatasets.push(chartDataset);
+    this.chartLabels = chartLabels;
+  }
   public chartType = 'line';
 
-  public chartDatasets: Array<any> = [
-    { data: [68, 70, 80, 81, 76, 94, 83], label: 'Мои друзья' }
-  ];
+  public chartDatasets: Array<any> = [];
 
   public chartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
